@@ -1,4 +1,7 @@
-flask
-Jinja2
-flask-heroku
-Flask-Script
+Flask==0.10.1
+flask-heroku==0.1.9
+Flask-Script==2.0.5
+itsdangerous==0.24
+Jinja2==2.8
+MarkupSafe==0.23
+Werkzeug==0.11.4

@@ -1,9 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="roomDisplayApp">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>Flask, ahaaaaa</title>
+
+        <link href="static/css/bootstrap.slate.min.css" rel="stylesheet">
     </head>
     <body>
-        It'll save every one of us
+        <div class="container" ng-controller="RoomDisplayController as roomDisplay">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tabbable">
+                        <ul class="nav nav-pills nav-stacked col-md-3">
+                            <li class="active">
+                                <a href="#overview" data-toggle="tab">
+                                    Overview
+                                </a>
+                            </li>
+                            <li ng-repeat="room in roomDisplay.rooms">
+                                <a href="#room-{{$index}}" data-toggle="tab">
+                                    {{room.name}}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content col-md-9">
+                            <div class="tab-pane active" id="overview">
+                                Room overview
+                            </div>
+                            <div class="tab-pane" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+                                {{room.name}} Details
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="static/js/jquery-2.2.1.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/angular.min.js"></script>
+        <script src="static/js/index.js"></script>
     </body>
 </html>

@@ -1,5 +1,5 @@
+import flask
 from flask import Flask
-from flask import render_template
 from flask.ext.heroku import Heroku
 from flask.ext.script import Manager
 from flask.ext.script import Server
@@ -16,7 +16,7 @@ heroku = Heroku(app)
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    return flask.send_file('./templates/index.html')
 
 
 ##################################################

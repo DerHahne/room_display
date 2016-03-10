@@ -1,0 +1,6 @@
+room_display:
+  build: .
+  volumes:
+    - /github/room_display:/var/app
+  ports:
+    - "5000:5000"

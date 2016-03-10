@@ -1,0 +1,4 @@
+flask
+Jinja2
+flask-heroku
+Flask-Script

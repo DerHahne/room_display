@@ -15,6 +15,7 @@ Both:
 * Agree data contract
 
 Backend:
+* Add makefile?
 * Return dummy data
 * Retrieve data from exchange
   * Accept username, password & exchange URL as environment variabless
@@ -23,6 +24,7 @@ Backend:
 * Accept insta-bookings
 
 Frontend:
+* Use https://cdnjs.com for library hosting
 * Render overview page
 * Render individual page
 * Retrieve data from backend

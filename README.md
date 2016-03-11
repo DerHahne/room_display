@@ -24,7 +24,6 @@ Backend:
 * Accept insta-bookings
 
 Frontend:
-* Use https://cdnjs.com for library hosting
 * Render overview page
 * Render individual page
 * Retrieve data from backend
@@ -33,6 +32,7 @@ Frontend:
 * Add currently free room suggestions
 * Add soonest free room suggestions
 * Add insta-bookings
+* Theme switching with https://github.com/jguadagno/bootstrapThemeSwitcher
 
 ## Credits
 

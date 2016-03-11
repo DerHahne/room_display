@@ -1,5 +1,7 @@
-# room_display
-A service to allow easy display of meeting room status from Outlook/Exchange
+# Room Display
+
+A service to allow easy display of meeting room status from Outlook/Exchange on a web based tablet interface
+
 
 ## Running
 
@@ -8,6 +10,7 @@ The easiest way to run the server is using docker-compose:
 docker-compose up
 ```
 Once the image has finished building & everything is running, you should be able to hit http://192.168.99.100:5000 to view the website.
+
 
 ## Todo
 
@@ -34,6 +37,14 @@ Frontend:
 * Add insta-bookings
 * Theme switching with https://github.com/jguadagno/bootstrapThemeSwitcher
 
+
 ## Credits
 
-The favicon is from [www.iconarchive.com](http://www.iconarchive.com/show/pretty-office-7-icons-by-custom-icon-design/Calendar-icon.html).
+* [Angular](https://angularjs.org/)
+* [Bootstrap](http://getbootstrap.com/)
+* [Bootswatch](https://bootswatch.com/)
+* [Flask](http://flask.pocoo.org/)
+* [jQuery](https://jquery.com/)
+* [IconArchive](http://www.iconarchive.com/show/pretty-office-7-icons-by-custom-icon-design/Calendar-icon.html) for the favicon
+* [cdnjs](https://cdnjs.com/) for library hosting
+* [bootstrapcdn](https://www.bootstrapcdn.com/) for bootstrap theme hosting

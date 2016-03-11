@@ -1,3 +1,5 @@
+import os
+
 import flask
 from flask import Flask
 from flask.ext.heroku import Heroku
@@ -37,6 +39,7 @@ def production():
 
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))
+    print('Running on port {PORT}'.format(PORT=port))
     app.run(host='0.0.0.0', port=port)
 
 

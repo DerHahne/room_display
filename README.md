@@ -42,9 +42,9 @@ Frontend:
 
 * [Angular](https://angularjs.org/)
 * [Bootstrap](http://getbootstrap.com/)
+* [BootstrapCDN](https://www.bootstrapcdn.com/) for bootstrap theme hosting
 * [Bootswatch](https://bootswatch.com/)
-* [Flask](http://flask.pocoo.org/)
-* [jQuery](https://jquery.com/)
-* [IconArchive](http://www.iconarchive.com/show/pretty-office-7-icons-by-custom-icon-design/Calendar-icon.html) for the favicon
 * [cdnjs](https://cdnjs.com/) for library hosting
-* [bootstrapcdn](https://www.bootstrapcdn.com/) for bootstrap theme hosting
+* [Flask](http://flask.pocoo.org/)
+* [IconArchive](http://www.iconarchive.com/show/pretty-office-7-icons-by-custom-icon-design/Calendar-icon.html) for the favicon
+* [jQuery](https://jquery.com/)

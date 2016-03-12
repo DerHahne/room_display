@@ -6,40 +6,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="static/favicon.png">
 
-        <title>Flask, ahaaaaa</title>
+        <title>Room Display</title>
 
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css" rel="stylesheet">
+        <link href="static/index.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container" ng-controller="RoomDisplayController as roomDisplay">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="tabbable">
-                        <ul class="nav nav-pills nav-stacked col-md-3">
-                            <li class="active">
-                                <a href="#overview" data-toggle="tab">
-                                    Overview
-                                </a>
-                            </li>
-                            <li ng-repeat="room in roomDisplay.rooms">
-                                <a href="#room-{{$index}}" data-toggle="tab">
-                                    {{room.name}}
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content col-md-9">
-                            <div class="tab-pane active" id="overview">
-                                Room overview
-                            </div>
-                            <div class="tab-pane" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
-                                {{room.name}} Details
-                            </div>
-                        </div>
-                    </div>
+        <div class="tabbable full_height" ng-controller="RoomDisplayController as roomDisplay">
+            <div class="col-md-3 full_height">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active">
+                        <a href="#overview" data-toggle="tab">
+                            Overview
+                        </a>
+                    </li>
+                    <li ng-repeat="room in roomDisplay.rooms">
+                        <a href="#room-{{$index}}" data-toggle="tab">
+                            {{room.name}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content col-md-9 full_height">
+                <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" id="fullscreen">
+                    <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                </button>
+
+                <div class="tab-pane active" id="overview">
+                    Room overview
+                </div>
+                <div class="tab-pane" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+                    {{room.name}} Details
                 </div>
             </div>
         </div>
-
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>

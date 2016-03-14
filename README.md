@@ -40,8 +40,9 @@ Extra ideas:
 * Add insta-bookings
 * Theme switching with https://github.com/jguadagno/bootstrapThemeSwitcher
 * Security through obscurity?
-  * Have a key which you uhave to enter the first time you go to the URL 
+  * Have a key which you have to enter the first time you go to the URL
   * Also allows multi-tenancy
+* Room locations
 
 
 ## Credits

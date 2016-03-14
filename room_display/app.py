@@ -21,6 +21,11 @@ def hello_world():
     return flask.send_file('./templates/index.html')
 
 
+@app.route('/data')
+def data():
+    return flask.send_file('../example_data.json')
+
+
 ##################################################
 #                    Main
 ##################################################

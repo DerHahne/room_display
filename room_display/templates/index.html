@@ -12,31 +12,102 @@
         <link href="static/index.css" rel="stylesheet">
     </head>
     <body>
-        <div class="tabbable full_height" ng-controller="RoomDisplayController as roomDisplay">
-            <div class="col-md-3 full_height">
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="active">
-                        <a href="#overview" data-toggle="tab">
-                            Overview
-                        </a>
-                    </li>
-                    <li ng-repeat="room in roomDisplay.rooms">
-                        <a href="#room-{{$index}}" data-toggle="tab">
-                            {{room.name}}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content col-md-9 full_height">
+
+
+        <div class="tabbable" ng-controller="RoomDisplayController as roomDisplay">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown active navbar-left" id="page_changer">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                    <span id="page_name">
+                                        ...
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="active">
+                                        <a href="#Dashboard" data-toggle="tab">
+                                            Dashboard
+                                        </a>
+                                    </li>
+                                    <li ng-repeat="room in roomDisplay.rooms">
+                                        <a href="#room-{{room.id}}" data-toggle="tab">
+                                            {{room.name}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <span class="navbar-right" ng-controller='TimeController'>
+                            <div id="nav_time">
+                                {{ clock | date:'HH:mm' }}
+                            </div>
+                            <div id="nav_date">
+                                {{ clock | date:'EEE, d MMMM' }}
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="jumbotron tab-content">
                 <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" id="fullscreen">
                     <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                 </button>
 
-                <div class="tab-pane active" id="overview">
-                    Room overview
+                <div class="tab-pane active" id="Dashboard">
+                    <span class="room" ng-repeat="room in roomDisplay.rooms">
+                        <span class="room-name">
+                            {{room.name}}
+                        </span>
+                        <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
+                            <span class="booking-time">
+                                <span class="booking-start_time">
+                                    {{booking.start_time}}
+                                </span>
+                                -
+                                <span class="booking-end_time">
+                                    {{booking.end_time}}
+                                </span>
+                            </span>
+
+                            <span class="booking-heading">
+                                <span ng-if="booking.available">
+                                    Available
+                                </span>
+                                <span ng-if="!booking.available">
+                                    {{booking.description}}
+                                </span>
+                            </span>
+
+                            <span class="booking-details">
+                                <span ng-if="booking.starts_in_minutes <= 0">
+                                    For {{booking.ends_in_minutes}} minutes
+                                </span>
+                                <span ng-if="booking.starts_in_minutes > 0">
+                                    In {{booking.starts_in_minutes}} minutes
+                                </span>
+
+                                <span ng-if="booking.username" class="booking-username">
+                                    (By {{booking.username}})
+                                </span>
+                            </span>
+                        </span>
+                    </span>
                 </div>
-                <div class="tab-pane" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+
+                <div class="tab-pane" id="room-{{room.id}}" ng-repeat="room in roomDisplay.rooms">
+                    Top
+                    <br/>
+                    <br/>
+                    <br/>
                     {{room.name}} Details
+                    <br/>
+                    <br/>
+                    <br/>
+                    Bottom
                 </div>
             </div>
         </div>

@@ -1,12 +1,53 @@
-html, body, .full_height {
-    height: 100%;
-}
-
-body {
-    padding-top: 10px;
-}
 
 #fullscreen {
     position: absolute;
     right: 10px;
+    display: none;
+}
+
+#nav_time, #nav_date {
+    text-align: right;
+    margin-right: 5px;
+}
+
+.room {
+    display: block;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.room-name {
+    display: block;
+    font-size: 20pt;
+}
+
+.room-booking {
+    display: block;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.room-booking.available {
+    background-color: green;
+}
+
+.room-booking.busy {
+    background-color: red;
+}
+
+.booking-time {
+    display: block;
+}
+
+.booking-heading {
+    display: block;
+    font-size: 30pt;
+}
+
+.booking-details {
+    display: block;
 }

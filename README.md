@@ -45,7 +45,6 @@ If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" t
 
 Backend:
 * Add makefile?
-* Return dummy data if `OUTLOOK_DOMAIN` not set
 
 Frontend:
 * Make individual page better

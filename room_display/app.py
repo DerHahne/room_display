@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from datetime import datetime
 
 import flask
@@ -35,7 +36,7 @@ config = {
     'allowed_ips': [
         ip.strip()
         for ip in _allowed_ips.split(',')
-        ] if _allowed_ips else [],
+    ] if _allowed_ips else [],
 
     # Frontend settings
     'poll_interval': os.environ.get('OUTLOOK_POLL_INTERVAL', 1),
@@ -63,6 +64,7 @@ if config['domain']:
 @app.before_request
 def restrict_access():
     if config['allowed_ips'] and request.remote_addr not in config['allowed_ips']:
+        sys.stderr.write('Insecure access blocked from {ip}!\n'.format(ip=request.remote_addr))
         abort(403)
 
 

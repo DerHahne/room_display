@@ -1,0 +1,45 @@
+{
+    "polling": {
+        "interval": 1,
+        "start_minute": 420,
+        "end_minute": 1140
+    },
+    "rooms": {
+        "room_awesome": {
+            "name": "Awesome Room",
+            "description": "10, Display, Aircon, Wifi, Cats",
+            "bookings": [
+                {
+                    "username": "Alice",
+                    "description": "Innovation day brainstorm",
+                    "start_minute": 540,
+                    "end_minute": 570
+                },
+                {
+                    "username": "Bob",
+                    "description": "Lunch",
+                    "start_minute": 840,
+                    "end_minute": 900
+                },
+                {
+                    "username": "Alice",
+                    "description": "<Private>",
+                    "start_minute": 1020,
+                    "end_minute": 1080
+                }
+            ]
+        },
+        "room_boring": {
+            "name": "Boring Room",
+            "description": "4",
+            "bookings": [
+                {
+                    "username": "Eve",
+                    "description": "Innovation day brainstorm",
+                    "start_minute": 540,
+                    "end_minute": 1020
+                }
+            ]
+        }
+    }
+}

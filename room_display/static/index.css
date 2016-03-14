@@ -1,12 +1,6 @@
-html, body, .full_height {
-    height: 100%;
-}
-
-body {
-    padding-top: 10px;
-}
 
 #fullscreen {
     position: absolute;
     right: 10px;
+    display: none;
 }

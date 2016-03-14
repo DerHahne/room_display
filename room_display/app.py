@@ -78,8 +78,8 @@ def data():
         return flask.send_file('../example_data.json')
 
     # Otherwise, get the info from Exchange
-    start = datetime.today().replace(hour=7, minute=0, second=0, microsecond=0)
-    end = datetime.today().replace(hour=23, minute=0, second=0, microsecond=0)
+    start = datetime.today().replace(hour=0, minute=0, second=0)
+    end = datetime.today().replace(hour=23, minute=59, second=59)
     data = {
         "polling": {
             "interval": config['poll_interval'],

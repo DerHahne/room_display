@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from memoize import Memoizer
 
 from service.exchange import ExchangeCalendar
@@ -24,11 +26,18 @@ class RoomDisplay(object):
         )
 
         if room_dict:
-            self.rooms = json.loads(room_dict)
+            potential_rooms = json.loads(room_dict)
         elif room_search_term:
-            self.rooms = {room['displayName']: room['email'] for room in exchange.get_contacts(room_search_term)}
+            potential_rooms = {room['displayName']: room['email'] for room in self.exchange.get_contacts(room_search_term)}
         else:
             raise Exception('You must provide one of room_dict or room_search_term!')
+
+        # Check for valid rooms
+        self.rooms = dict([
+            (room_name, room_email)
+            for room_name, room_email in potential_rooms.iteritems()
+            if self.check_room(room_email)
+        ])
 
         # Apply caching
         if cache_time:
@@ -36,18 +45,29 @@ class RoomDisplay(object):
             memo = Memoizer(store)
             self.get_room_data = memo(max_age=cache_time)(self.get_room_data)
 
-    def get_room_data(self, start, end, id_namespace):
+    def check_room(self, room_email):
+        start = datetime.today().replace(hour=0, minute=0, second=0)
+        end = datetime.today().replace(hour=23, minute=59, second=59)
+
+        try:
+            # Fetch the room bookings
+            self.exchange.get_bookings(start, end, room_email)
+        except RuntimeError:
+            return False
+        return True
+
+    def get_room_data(self, start, end):
         rooms = []
 
         for room_name, room_email in self.rooms.iteritems():
             print room_name, room_email
             meeting_room_details = {
-                "id": "{}.{}".format(id_namespace, room_email.split('@')[0]),
+                "id": "{}.{}".format(self.id_namespace, room_email.split('@')[0]),
                 "name": room_name,
                 "description": None,
                 "bookings": [
-                    _transform_booking_info(booking)
-                    for booking in exchange.get_bookings(start, end, room_email)
+                    self._transform_booking_info(booking)
+                    for booking in self.exchange.get_bookings(start, end, room_email)
                 ]
             }
             rooms.append(meeting_room_details)

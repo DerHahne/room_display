@@ -40,12 +40,12 @@
                                 </ul>
                             </li>
                         </ul>
-                        <span class="navbar-right">
+                        <span class="navbar-right" ng-controller='TimeController'>
                             <div id="nav_time">
-                                10:44 am
+                                {{ clock | date:'HH:mm a' }}
                             </div>
                             <div id="nav_date">
-                                Mon, 14th March
+                                {{ clock | date:'EEE, d MMMM' }}
                             </div>
                         </span>
                     </div>

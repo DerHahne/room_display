@@ -8,6 +8,8 @@
 
         <title>Room Display</title>
 
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+        
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css" rel="stylesheet">
         <link href="static/index.css" rel="stylesheet">
     </head>
@@ -59,9 +61,9 @@
 
                 <div class="tab-pane active" id="Dashboard">
                     <span class="room" ng-repeat="room in roomDisplay.rooms">
-                        <span class="room-name">
+                        <h1 class="room-name">
                             {{room.name}}
-                        </span>
+                        </h1>
                         <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
                             <span class="booking-time">
                                 <span class="booking-start_time">
@@ -73,14 +75,14 @@
                                 </span>
                             </span>
 
-                            <span class="booking-heading">
+                            <h2 class="booking-heading">
                                 <span ng-if="booking.available">
                                     Available
                                 </span>
                                 <span ng-if="!booking.available">
                                     {{booking.description}}
                                 </span>
-                            </span>
+                            </h2>
 
                             <span class="booking-details">
                                 <span ng-if="booking.starts_in_minutes <= 0">
@@ -91,23 +93,15 @@
                                 </span>
 
                                 <span ng-if="booking.username" class="booking-username">
-                                    (By {{booking.username}})
+                                    ,By {{booking.username}}
                                 </span>
                             </span>
                         </span>
                     </span>
                 </div>
 
-                <div class="tab-pane" id="room-{{room.id}}" ng-repeat="room in roomDisplay.rooms">
-                    Top
-                    <br/>
-                    <br/>
-                    <br/>
-                    {{room.name}} Details
-                    <br/>
-                    <br/>
-                    <br/>
-                    Bottom
+                <div class="tab-pane detail busy"  id="room-{{room.id}}" ng-repeat="room in roomDisplay.rooms">
+                    <h1>Available</h1>
                 </div>
             </div>
         </div>

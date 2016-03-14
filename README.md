@@ -24,11 +24,7 @@ Backend:
   * Accept poll times (i.e. 7am-7pm) as environment variable?
 
 Frontend:
-* Render overview page
-* Render individual page
-* Retrieve data from backend
-* Periodically poll for new data
-  * Follow same interval & times as backend?
+* Make individual page better
 * Add home page & move there after inactivity
 * Add currently free room suggestions
 * Add soonest free room suggestions

@@ -4,3 +4,8 @@
     right: 10px;
     display: none;
 }
+
+#nav_time, #nav_date {
+    text-align: right;
+    margin-right: 5px;
+}

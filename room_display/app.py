@@ -63,8 +63,9 @@ if config['domain']:
 
 @app.before_request
 def restrict_access():
-    if config['allowed_ips'] and request.remote_addr not in config['allowed_ips']:
-        sys.stderr.write('Insecure access blocked from {ip}!\n'.format(ip=request.remote_addr))
+    client_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+    if config['allowed_ips'] and client_address not in config['allowed_ips']:
+        sys.stderr.write('Insecure access blocked from {ip}!\n'.format(ip=client_address))
         abort(403)
 
 

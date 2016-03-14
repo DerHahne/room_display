@@ -69,10 +69,3 @@ h1 {
 .booking-details {
     display: block;
 }
-.detail.busy {
-    background-color:red;
-    margin-top:0px;
-    background: -moz-linear-gradient(left,  #ff3019 0%, #cf0404 100%);
-    background: -webkit-linear-gradient(left,  #ff3019 0%,#cf0404 100%);
-    background: linear-gradient(to right,  #ff3019 0%,#cf0404 100%);
-}

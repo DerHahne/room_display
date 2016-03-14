@@ -72,7 +72,7 @@
                     </span>
                 </div>
 
-                <div class="tab-pane detail busy"  id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+                <div class="tab-pane detail busy" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
                     <span ng-repeat="booking in room.bookings">
                         <span ng-include src="'static/booking.html'"></span>
                     </span>

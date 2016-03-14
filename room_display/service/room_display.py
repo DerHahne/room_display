@@ -60,7 +60,6 @@ class RoomDisplay(object):
         rooms = []
 
         for room_name, room_email in self.rooms.iteritems():
-            print room_name, room_email
             meeting_room_details = {
                 "id": "{}.{}".format(self.id_namespace, room_email.split('@')[0]),
                 "name": room_name,

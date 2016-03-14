@@ -35,7 +35,7 @@ config = {
     'password': os.environ['OUTLOOK_PASSWORD'],
     'allowed_ips': [ip.strip() for ip in _allowed_ips.split(',')] if _allowed_ips else [],
     'room_dict': os.environ.get('OUTLOOK_ROOM_DICT', ''),
-    'room_search_term': os.environ.get('OUTLOOK_ROOM_SEARCH_TERM'),
+    'room_search_term': os.environ.get('OUTLOOK_ROOM_SEARCH_TERM', ''),
     'poll_interval': os.environ.get('OUTLOOK_POLL_INTERVAL', 1),
     'poll_start_minute': os.environ.get('OUTLOOK_POLL_START_MINUTE', 420),
     'poll_end_minute': os.environ.get('OUTLOOK_POLL_END_MINUTE', 1140),

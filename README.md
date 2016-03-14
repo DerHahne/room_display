@@ -7,6 +7,9 @@ A service to allow easy display of meeting room status from Outlook/Exchange on 
 
 The easiest way to run the server is using docker-compose:
 ```bash
+cp config.env.template config.env
+vi config.env
+# Update environment variables (see below)
 docker-compose up
 ```
 Once the image has finished building & everything is running, you should be able to hit http://192.168.99.100:5000 to view the website.
@@ -32,6 +35,7 @@ json.dumps({'Meeting Room A': 'room.mtg.a@example.com', 'Meeting Room B': 'room.
 ```
 OR you can set the search term to a fragment of a meeting room name and let the app find the meeting rooms for itself. E.g.:
 If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" then the search term should be "Meet".
+
 
 ## Todo
 

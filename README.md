@@ -23,19 +23,25 @@ Backend:
 * Retrieve data from exchange
   * Accept username, password & exchange URL as environment variabless
 * Periodically poll for new data
-  * Accept interval as environment variable
-* Accept insta-bookings
+  * Accept interval as environment variable?
+  * Accept poll times (i.e. 7am-7pm) as environment variable?
 
 Frontend:
 * Render overview page
 * Render individual page
 * Retrieve data from backend
 * Periodically poll for new data
+  * Follow same interval & times as backend?
 * Add home page & move there after inactivity
 * Add currently free room suggestions
 * Add soonest free room suggestions
+
+Extra ideas:
 * Add insta-bookings
 * Theme switching with https://github.com/jguadagno/bootstrapThemeSwitcher
+* Security through obscurity?
+  * Have a key which you uhave to enter the first time you go to the URL 
+  * Also allows multi-tenancy
 
 
 ## Credits

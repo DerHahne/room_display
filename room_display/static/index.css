@@ -9,3 +9,44 @@
     text-align: right;
     margin-right: 5px;
 }
+
+.room {
+    display: block;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.room-name {
+    display: block;
+    font-size: 24pt;
+}
+
+.room-booking {
+    display: block;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.room-booking.available {
+    background-color: green;
+}
+
+.room-booking.busy {
+    background-color: red;
+}
+
+.booking-start_minute {
+}
+
+.booking-end_minute {
+}
+
+.booking-username {
+}
+
+.booking-description {
+}

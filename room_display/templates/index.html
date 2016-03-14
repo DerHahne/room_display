@@ -33,7 +33,7 @@
                                         </a>
                                     </li>
                                     <li ng-repeat="room in roomDisplay.rooms">
-                                        <a href="#room-{{$index}}" data-toggle="tab">
+                                        <a href="#room-{{room.id}}" data-toggle="tab">
                                             {{room.name}}
                                         </a>
                                     </li>
@@ -58,24 +58,28 @@
                 </button>
 
                 <div class="tab-pane active" id="overview">
-                    Top
-                    <br/>
-                    <br/>
-                    <br/>
-                    Room overview
-
-
-                    <ul>
-                        <li ng-repeat="room in roomDisplay.rooms">
+                    <span class="room" ng-repeat="room in roomDisplay.rooms">
+                        <span class="room-name">
                             {{room.name}}
-                        </li>
-                    </ul>
-                    <br/>
-                    <br/>
-                    <br/>
-                    Bottom
+                        </span>
+                        <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
+                            <span class="booking-start_minute">
+                                {{booking.start_minute}}
+                            </span>
+                            <span class="booking-end_minute">
+                                {{booking.end_minute}}
+                            </span>
+                            <span class="booking-username">
+                                {{booking.username}}
+                            </span>
+                            <span class="booking-description">
+                                {{booking.description}}
+                            </span>
+                        </span>
+                    </span>
                 </div>
-                <div class="tab-pane" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+
+                <div class="tab-pane" id="room-{{room.id}}" ng-repeat="room in roomDisplay.rooms">
                     Top
                     <br/>
                     <br/>

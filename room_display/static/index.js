@@ -88,6 +88,7 @@ roomDisplayModule.config(function($provide) {
             roomDataInstance._poll.interval = data.interval || roomDataInstance._poll.interval;
             roomDataInstance._poll.start_minute = data.start_minute || roomDataInstance._poll.start_minute;
             roomDataInstance._poll.end_minute = data.end_minute || roomDataInstance._poll.end_minute;
+            roomDataInstance._poll.last_poll_minutes = roomDataInstance.currentTimeMinutes();
         };
 
         roomDataInstance._updateRooms = function(data) {
@@ -133,9 +134,40 @@ roomDisplayModule.config(function($provide) {
         };
 
         roomDataInstance._parseBookings = function(data) {
-            return data.map(function(booking) {
-                return booking;
+            // TODO: Sort by start time?
+
+            // First possible free time is later of now and start of day
+            var last_booked_time = Math.max(
+                    roomDataInstance.currentTimeMinutes(),
+                    roomDataInstance._poll.start_minute
+                ),
+                parsed_bookings = [];
+
+            data.forEach(function(booking) {
+                // Check if there needs to be free time before this booking
+                if (last_booked_time < booking.start_minute) {
+                    parsed_bookings.push({
+                        available: true,
+                        start_minute: last_booked_time,
+                        end_minute: booking.start_minute
+                    });
+                }
+                last_booked_time = booking.end_minute;
+
+                booking.available = false;
+                parsed_bookings.push(booking);
             });
+
+            // Add free time after the last meeting of the day?
+            if (last_booked_time < roomDataInstance._poll.end_minute) {
+                parsed_bookings.push({
+                    available: true,
+                    start_minute: last_booked_time,
+                    end_minute: roomDataInstance._poll.end_minute
+                });
+            }
+
+            return parsed_bookings;
         };
 
         roomDataInstance._updateRoomList = function() {
@@ -143,6 +175,7 @@ roomDisplayModule.config(function($provide) {
                 // Room list is already setup; assume it won't change
                 return;
             }
+
             // TODO: Order rooms by name
             Object.keys(roomDataInstance.roomData).forEach(function(room_id) {
                 roomDataInstance.rooms.push(roomDataInstance.roomData[room_id]);
@@ -159,8 +192,8 @@ roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope
     // Make the list of rooms available to the template
     roomDisplay.rooms = $roomData.rooms;
 
-    //$roomData.enablePolling();
-    $roomData.update();
+    $roomData.enablePolling();
+    //$roomData.update();
 });
 
 roomDisplayModule.controller('TimeController', function($scope, $interval) {

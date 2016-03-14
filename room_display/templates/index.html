@@ -63,14 +63,14 @@
                         <h1 class="room-name">
                             {{room.name}}
                         </h1>
-                        <span ng-repeat="booking in room.bookings">
-                            <span ng-include src="'static/booking.html'"></span>
-                        </span>
+                        <span ng-include src="'static/booking.html'" ng-init="booking = room.first_booking"></span>
                     </span>
                 </div>
 
                 <div class="tab-pane detail busy"  id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
-                    <h1>Available</h1>
+                    <span ng-repeat="booking in room.bookings">
+                        <span ng-include src="'static/booking.html'"></span>
+                    </span>
                 </div>
             </div>
         </div>

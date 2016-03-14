@@ -18,17 +18,20 @@ Once the image has finished building & everything is running, you should be able
 ## Settings
 
 The following environment variables need to be set for the app to work:
-* `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
-  * If this is left blank, the server will operate in a demonstration mode (using example data)
-* `OUTLOOK_EWS_URL`: URL to the EWS endpoint on the exchange server e.g. [https://<your exchange server>/EWS/Exchange.asmx]
-* `OUTLOOK_USERNAME`: User for exchange
-* `OUTLOOK_PASSWORD`: Password for exchange
-* `OUTLOOK_ROOM_DICT` (See below): A JSON dump of a dict containing the room name as a key and the room's email address as a value
-* `OUTLOOK_ROOM_SEARCH_TERM` (See below): A string fragment to match to find contacts that are meeting rooms from the exchange global address list
-* `OUTLOOK_POLL_INTERVAL` (Optional): Poll wait time for the client in minutes. Defaults to 1.
-* `OUTLOOK_POLL_START_MINUTE` (Optional): Poll start time in minutes from midnight. Defaults to 420 (7am)
-* `OUTLOOK_POLL_END_MINUTE` (Optional): Poll end time in minutes from midnight. Defaults to 1140 (7pm).
-* `OUTLOOK_ALLOWED_IPS` (Optional): A comma separated listed of allowed IPs. Default is allowed by any IP.
+* Exchange settings:
+  * `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
+    * If this is left blank, the server will operate in a demonstration mode (using example data)
+  * `OUTLOOK_EWS_URL`: URL to the EWS endpoint on the exchange server e.g. [https://<your exchange server>/EWS/Exchange.asmx]
+  * `OUTLOOK_USERNAME`: User for exchange
+  * `OUTLOOK_PASSWORD`: Password for exchange
+  * `OUTLOOK_ROOM_DICT` (See below): A JSON dump of a dict containing the room name as a key and the room's email address as a value
+  * `OUTLOOK_ROOM_SEARCH_TERM` (See below): A string fragment to match to find contacts that are meeting rooms from the exchange global address list
+* Security settings:
+  * `OUTLOOK_ALLOWED_IPS` (Optional): A comma separated listed of allowed IPs. Default is allowed by any IP.
+* Frontend settings:
+  * `OUTLOOK_POLL_INTERVAL` (Optional): Poll wait time for the client in minutes. Defaults to 1.
+  * `OUTLOOK_POLL_START_MINUTE` (Optional): Poll start time in minutes from midnight. Defaults to 420 (7am)
+  * `OUTLOOK_POLL_END_MINUTE` (Optional): Poll end time in minutes from midnight. Defaults to 1140 (7pm).
 
 Either the list of meeting rooms must be supplied as a json.dumps string:
 ```python

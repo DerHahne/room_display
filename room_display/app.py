@@ -9,6 +9,7 @@ from flask_heroku import Heroku
 from flask_script import Manager
 #from flask.ext.script import Server
 from flask_script import Server
+from memoize import Memoizer
 
 from service.exchange import ExchangeCalendar
 
@@ -22,6 +23,9 @@ app.debug = True
 heroku = Heroku(app)
 
 
+store = {}
+memo = Memoizer(store)
+
 config = {
     'domain': os.environ.get('OUTLOOK_DOMAIN'),
     'ews_url': os.environ.get('OUTLOOK_EWS_URL'),  # EWS = Exchange Web Services
@@ -30,6 +34,7 @@ config = {
     'poll_interval': os.environ.get('OUTLOOK_POLL_INTERVAL', 1),
     'poll_start_minute': os.environ.get('OUTLOOK_POLL_START_MINUTE', 420),
     'poll_end_minute': os.environ.get('OUTLOOK_POLL_END_MINUTE', 1140),
+    'cache_time': os.environ.get('CACHE_TIME', 30),
 }
 
 
@@ -67,6 +72,10 @@ def data():
         "rooms": [],
     }
 
+    return get_meeting_room_data(start, end, id_namespace, ret)
+
+@memo(max_age=config['cache_time'])
+def get_meeting_room_data(start, end, id_namespace, ret):
     for room_name, room_email in MEETING_ROOMS.iteritems():
         meeting_room_details = {
             "id": "{}.{}".format(id_namespace, room_email.split('@')[0]),

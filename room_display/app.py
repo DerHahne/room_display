@@ -1,8 +1,9 @@
 import os
+import json
 from datetime import datetime
 
 import flask
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort, request
 #from flask.ext.heroku import Heroku
 from flask_heroku import Heroku
 #from flask.ext.script import Manager
@@ -21,16 +22,26 @@ app = Flask(__name__)
 app.debug = True
 heroku = Heroku(app)
 
-
+_allowed_ips = os.environ.get('OUTLOOK_ALLOWED_IPS', '')
 config = {
-    'domain': os.environ.get('OUTLOOK_DOMAIN'),
-    'ews_url': os.environ.get('OUTLOOK_EWS_URL'),  # EWS = Exchange Web Services
-    'username': os.environ.get('OUTLOOK_USERNAME'),
-    'password': os.environ.get('OUTLOOK_PASSWORD'),
+    'domain': os.environ['OUTLOOK_DOMAIN'],
+    'ews_url': os.environ['OUTLOOK_EWS_URL'],  # EWS = Exchange Web Services
+    'username': os.environ['OUTLOOK_USERNAME'],
+    'password': os.environ['OUTLOOK_PASSWORD'],
+    'allowed_ips': [ip.strip() for ip in _allowed_ips.split(',')] if _allowed_ips else [],
+    'room_dict': os.environ.get('OUTLOOK_ROOM_DICT', ''),
+    'room_search_term': os.environ.get('OUTLOOK_ROOM_SEARCH_TERM'),
     'poll_interval': os.environ.get('OUTLOOK_POLL_INTERVAL', 1),
     'poll_start_minute': os.environ.get('OUTLOOK_POLL_START_MINUTE', 420),
     'poll_end_minute': os.environ.get('OUTLOOK_POLL_END_MINUTE', 1140),
 }
+
+exchange = ExchangeCalendar(config['domain'], config['ews_url'], config['username'], config['password'])
+
+if config['room_dict']:
+    MEETING_ROOMS = json.loads(config['room_dict'])
+else:
+    MEETING_ROOMS = {room['displayName']: room['email'] for room in exchange.get_contacts(config['room_search_term'])}
 
 
 def _transform_booking_info(booking):
@@ -43,9 +54,12 @@ def _transform_booking_info(booking):
 
     return booking
 
-exchange = ExchangeCalendar(config['domain'], config['ews_url'], config['username'], config['password'])
 
-MEETING_ROOMS = {room['displayName']: room['email'] for room in exchange.get_contacts('-MR')}
+@app.before_request
+def restrict_access():
+    if config['allowed_ips'] and request.remote_addr not in config['allowed_ips']:
+        abort(403)
+
 
 @app.route('/')
 def hello_world():

@@ -8,14 +8,13 @@
 
         <title>Room Display</title>
 
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
-        
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css" rel="stylesheet">
         <link href="static/index.css" rel="stylesheet">
     </head>
+
     <body>
-
-
         <div class="tabbable" ng-controller="RoomDisplayController as roomDisplay">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
@@ -35,7 +34,7 @@
                                         </a>
                                     </li>
                                     <li ng-repeat="room in roomDisplay.rooms">
-                                        <a href="#room-{{room.id}}" data-toggle="tab">
+                                        <a href="#room-{{$index}}" data-toggle="tab">
                                             {{room.name}}
                                         </a>
                                     </li>
@@ -100,7 +99,7 @@
                     </span>
                 </div>
 
-                <div class="tab-pane detail busy"  id="room-{{room.id}}" ng-repeat="room in roomDisplay.rooms">
+                <div class="tab-pane detail busy"  id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
                     <h1>Available</h1>
                 </div>
             </div>

@@ -28,8 +28,8 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="active">
-                                        <a href="#overview" data-toggle="tab">
-                                            Overview
+                                        <a href="#Dashboard" data-toggle="tab">
+                                            Dashboard
                                         </a>
                                     </li>
                                     <li ng-repeat="room in roomDisplay.rooms">
@@ -57,7 +57,7 @@
                     <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                 </button>
 
-                <div class="tab-pane active" id="overview">
+                <div class="tab-pane active" id="Dashboard">
                     <span class="room" ng-repeat="room in roomDisplay.rooms">
                         <span class="room-name">
                             {{room.name}}
@@ -75,7 +75,7 @@
 
                             <span class="booking-heading">
                                 <span ng-if="booking.available">
-                                    Free
+                                    Available
                                 </span>
                                 <span ng-if="!booking.available">
                                     {{booking.description}}

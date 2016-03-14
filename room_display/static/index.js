@@ -167,6 +167,13 @@ roomDisplayModule.config(function($provide) {
                 });
             }
 
+            // Work out starts/ends_in_minutes
+            var now = roomDataInstance.currentTimeMinutes();
+            parsed_bookings.forEach(function(booking) {
+                booking.starts_in_minutes = booking.start_minute - now;
+                booking.ends_in_minutes = booking.end_minute - now;
+            });
+
             return parsed_bookings;
         };
 

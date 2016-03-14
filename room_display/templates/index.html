@@ -63,17 +63,36 @@
                             {{room.name}}
                         </span>
                         <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
-                            <span class="booking-start_minute">
-                                {{booking.start_minute}}
+                            <span class="booking-time">
+                                <span class="booking-start_minute">
+                                    {{booking.start_minute}}
+                                </span>
+                                -
+                                <span class="booking-end_minute">
+                                    {{booking.end_minute}}
+                                </span>
                             </span>
-                            <span class="booking-end_minute">
-                                {{booking.end_minute}}
+
+                            <span class="booking-heading">
+                                <span ng-if="booking.available">
+                                    Free
+                                </span>
+                                <span ng-if="!booking.available">
+                                    {{booking.description}}
+                                </span>
                             </span>
-                            <span class="booking-username">
-                                {{booking.username}}
-                            </span>
-                            <span class="booking-description">
-                                {{booking.description}}
+
+                            <span class="booking-details">
+                                <span ng-if="booking.starts_in_minutes <= 0">
+                                    For {{booking.ends_in_minutes}} minutes
+                                </span>
+                                <span ng-if="booking.starts_in_minutes > 0">
+                                    In {{booking.starts_in_minutes}} minutes
+                                </span>
+
+                                <span ng-if="booking.username" class="booking-username">
+                                    (By {{booking.username}})
+                                </span>
                             </span>
                         </span>
                     </span>

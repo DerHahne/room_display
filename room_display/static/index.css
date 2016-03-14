@@ -39,14 +39,15 @@
     background-color: red;
 }
 
-.booking-start_minute {
+.booking-time {
+    display: block;
 }
 
-.booking-end_minute {
+.booking-heading {
+    display: block;
+    font-size: 24pt;
 }
 
-.booking-username {
-}
-
-.booking-description {
+.booking-details {
+    display: block;
 }

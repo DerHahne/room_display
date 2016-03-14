@@ -19,6 +19,7 @@ Once the image has finished building & everything is running, you should be able
 
 The following environment variables need to be set for the app to work:
 * `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
+  * If this is left blank, the server will operate in a demonstration mode (using example data)
 * `OUTLOOK_EWS_URL`: URL to the EWS endpoint on the exchange server e.g. [https://<your exchange server>/EWS/Exchange.asmx]
 * `OUTLOOK_USERNAME`: User for exchange
 * `OUTLOOK_PASSWORD`: Password for exchange

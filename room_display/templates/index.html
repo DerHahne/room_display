@@ -63,7 +63,12 @@
                         <h1 class="room-name">
                             {{room.name}}
                         </h1>
-                        <span ng-include src="'static/booking.html'" ng-init="booking = room.first_booking"></span>
+                        <span ng-if="room.first_booking">
+                            <span ng-include src="'static/booking.html'" ng-init="booking = room.first_booking"></span>
+                        </span>
+                        <span ng-if="!room.first_booking">
+                            No more bookings!
+                        </span>
                     </span>
                 </div>
 

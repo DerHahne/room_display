@@ -4,8 +4,9 @@
         "start_minute": 420,
         "end_minute": 1140
     },
-    "rooms": {
-        "room_awesome": {
+    "rooms": [
+        {
+            "id": "room_awesome",
             "name": "Awesome Room",
             "description": "10, Display, Aircon, Wifi, Cats",
             "bookings": [
@@ -29,7 +30,8 @@
                 }
             ]
         },
-        "room_boring": {
+        {
+            "id": "room_boring",
             "name": "Boring Room",
             "description": "4",
             "bookings": [
@@ -41,5 +43,5 @@
                 }
             ]
         }
-    }
+    ]
 }

@@ -14,9 +14,6 @@ Once the image has finished building & everything is running, you should be able
 
 ## Todo
 
-Both:
-* Agree data contract
-
 Backend:
 * Add makefile?
 * Return dummy data
@@ -37,12 +34,16 @@ Frontend:
 * Add soonest free room suggestions
 
 Extra ideas:
+* Move to timestamps instead of minutes (to support multi-day meetings)
 * Add insta-bookings
 * Theme switching with https://github.com/jguadagno/bootstrapThemeSwitcher
 * Security through obscurity?
   * Have a key which you have to enter the first time you go to the URL
   * Also allows multi-tenancy
 * Room locations
+* eInk/RaspberryPi Display
+* Room facilities & icons
+* Mulitple backends
 
 
 ## Credits

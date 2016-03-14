@@ -8,6 +8,7 @@ class ExchangeService(object):
     def __init__(self, domain, url, calendar="calendar"):
         self._service = None
         self._calendar = None
+        self._rooms = None
         self._calendar_name = calendar
         self._domain = domain
         self._url = url
@@ -18,6 +19,7 @@ class ExchangeService(object):
                                                 password=password)
         self._service = Exchange2010Service(connection)
         self._calendar = self._service.calendar(id=self._calendar_name)
+        self._rooms = self._service.rooms()
 
     def get_events(self):
         current_time = datetime.now()
@@ -29,8 +31,8 @@ class ExchangeService(object):
             raise RuntimeError(str(ex))
 
 # Bigelow710
-exchange = ExchangeService('aam', 'https://outlook.artsalliancemedia.com/EWS/Exchange.asmx', calendar='Kubrick192')
-exchange.connect('<USERNAME>', '<PASSWORD>')
+exchange = ExchangeService('aam', 'https://outlook.artsalliancemedia.com/EWS/Exchange.asmx')
+exchange.connect('', '')
 
 def stuff(item):
     """
@@ -49,8 +51,9 @@ def stuff(item):
         'organizer': item.organizer,
         'description': item.text_body,
     }
-
-print([stuff(item) for item in exchange.get_events()])
+#print(exchange._rooms.list_room_lists().roomLists)
+print(exchange._rooms.list_rooms('mtg.bigelow@artsalliancemedia.com'))
+#print([stuff(item) for item in exchange.get_events()])
 
 
 

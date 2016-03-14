@@ -127,9 +127,9 @@ roomDisplayModule.config(function($provide) {
             // Update bookings
             roomDataInstance.roomData[room.id].bookings.length = 0;
             parsed_future_bookings.forEach(function(booking) {
-                console.log(booking);
                 roomDataInstance.roomData[room.id].bookings.push(booking);
             });
+            roomDataInstance.roomData[room.id].first_booking = roomDataInstance.roomData[room.id].bookings[0];
         };
 
         roomDataInstance._getFutureBookings = function(data) {

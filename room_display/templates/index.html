@@ -63,38 +63,8 @@
                         <h1 class="room-name">
                             {{room.name}}
                         </h1>
-                        <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
-                            <span class="booking-time">
-                                <span class="booking-start_time">
-                                    {{booking.start_time}}
-                                </span>
-                                -
-                                <span class="booking-end_time">
-                                    {{booking.end_time}}
-                                </span>
-                            </span>
-
-                            <h2 class="booking-heading">
-                                <span ng-if="booking.available">
-                                    Available
-                                </span>
-                                <span ng-if="!booking.available">
-                                    Booked
-                                </span>
-                            </h2>
-
-                            <span class="booking-details">
-                                <span ng-if="booking.starts_in_minutes <= 0">
-                                    For {{booking.ends_in_minutes}} minutes
-                                </span>
-                                <span ng-if="booking.starts_in_minutes > 0">
-                                    In {{booking.starts_in_minutes}} minutes
-                                </span>
-
-                                <span ng-if="booking.username" class="booking-username">
-                                    ,By {{booking.username}}
-                                </span>
-                            </span>
+                        <span ng-repeat="booking in room.bookings">
+                            <span ng-include src="'static/booking.html'"></span>
                         </span>
                     </span>
                 </div>

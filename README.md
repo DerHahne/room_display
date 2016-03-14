@@ -12,13 +12,32 @@ docker-compose up
 Once the image has finished building & everything is running, you should be able to hit http://192.168.99.100:5000 to view the website.
 
 
+## Settings
+
+The following environment variables need to be set for the app to work:
+* OUTLOOK_DOMAIN: Domain for the outlook user to log onto
+* OUTLOOK_EWS_URL: URL to the EWS endpoint on the exchange server
+* OUTLOOK_USERNAME: User for exchange
+* OUTLOOK_PASSWORD: Password for exchange
+* [See below] OUTLOOK_ROOM_DICT: A json.dumps of a dict containing the room name as a key and the room's email address as a value
+* [See below] OUTLOOK_ROOM_SEARCH_TERM: A string fragment to match to find contacts that are meeting rooms from the exchange global address list
+* [Optional] OUTLOOK_POLL_INTERVAL: Poll wait time for the client in minutes. Defaults to 1.
+* [Optional] OUTLOOK_POLL_START_MINUTE: Poll start time in minutes from midnight. Defaults to 420 (7am)
+* [Optional] OUTLOOK_POLL_END_MINUTE: Poll end time in minutes from midnight. Defaults to 1140 (7pm).
+* [Optional] OUTLOOK_ALLOWED_IPS: A comma separated listed of allowed IPs. Default is allowed by any IP.
+
+Either the list of meeting rooms must be supplied as a json.dumps string:
+```
+json.dumps({'Meeting Room A': 'room.mtg.a@example.com', 'Meeting Room B': 'room.mtg.b@example.com'})
+```
+OR you can set the search term to a fragment of a meeting room name and let the app find the meeting rooms for itself. E.g.:
+If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" then the search term should be "Meet".
+
 ## Todo
 
 Backend:
 * Add makefile?
 * Return dummy data
-* Retrieve data from exchange
-  * Accept username, password & exchange URL as environment variabless
 * Periodically poll for new data
   * Accept interval as environment variable?
   * Accept poll times (i.e. 7am-7pm) as environment variable?

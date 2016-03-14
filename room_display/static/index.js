@@ -191,9 +191,14 @@ roomDisplayModule.config(function($provide) {
                 return;
             }
 
-            // TODO: Order rooms by name
+            // Add each room from roomData to the rooms list
             Object.keys(roomDataInstance.roomData).forEach(function(room_id) {
                 roomDataInstance.rooms.push(roomDataInstance.roomData[room_id]);
+            });
+
+            // Order rooms list by name
+            roomDataInstance.rooms.sort(function compare(r1, r2) {
+                return r1.name > r2.name;
             });
         };
 

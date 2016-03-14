@@ -8,12 +8,13 @@
 
         <title>Room Display</title>
 
+        <link href='//fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css" rel="stylesheet">
         <link href="static/index.css" rel="stylesheet">
     </head>
+
     <body>
-
-
         <div class="tabbable" ng-controller="RoomDisplayController as roomDisplay">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
@@ -33,7 +34,7 @@
                                         </a>
                                     </li>
                                     <li ng-repeat="room in roomDisplay.rooms">
-                                        <a href="#room-{{room.id}}" data-toggle="tab">
+                                        <a href="#room-{{$index}}" data-toggle="tab">
                                             {{room.name}}
                                         </a>
                                     </li>
@@ -59,55 +60,17 @@
 
                 <div class="tab-pane active" id="Dashboard">
                     <span class="room" ng-repeat="room in roomDisplay.rooms">
-                        <span class="room-name">
+                        <h1 class="room-name">
                             {{room.name}}
-                        </span>
-                        <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
-                            <span class="booking-time">
-                                <span class="booking-start_time">
-                                    {{booking.start_time}}
-                                </span>
-                                -
-                                <span class="booking-end_time">
-                                    {{booking.end_time}}
-                                </span>
-                            </span>
-
-                            <span class="booking-heading">
-                                <span ng-if="booking.available">
-                                    Available
-                                </span>
-                                <span ng-if="!booking.available">
-                                    {{booking.description}}
-                                </span>
-                            </span>
-
-                            <span class="booking-details">
-                                <span ng-if="booking.starts_in_minutes <= 0">
-                                    For {{booking.ends_in_minutes}} minutes
-                                </span>
-                                <span ng-if="booking.starts_in_minutes > 0">
-                                    In {{booking.starts_in_minutes}} minutes
-                                </span>
-
-                                <span ng-if="booking.username" class="booking-username">
-                                    (By {{booking.username}})
-                                </span>
-                            </span>
-                        </span>
+                        </h1>
+                        <span ng-include src="'static/booking.html'" ng-init="booking = room.first_booking"></span>
                     </span>
                 </div>
 
-                <div class="tab-pane" id="room-{{room.id}}" ng-repeat="room in roomDisplay.rooms">
-                    Top
-                    <br/>
-                    <br/>
-                    <br/>
-                    {{room.name}} Details
-                    <br/>
-                    <br/>
-                    <br/>
-                    Bottom
+                <div class="tab-pane detail busy"  id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+                    <span ng-repeat="booking in room.bookings">
+                        <span ng-include src="'static/booking.html'"></span>
+                    </span>
                 </div>
             </div>
         </div>

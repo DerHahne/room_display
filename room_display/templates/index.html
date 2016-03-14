@@ -42,7 +42,7 @@
                         </ul>
                         <span class="navbar-right" ng-controller='TimeController'>
                             <div id="nav_time">
-                                {{ clock | date:'HH:mm a' }}
+                                {{ clock | date:'HH:mm' }}
                             </div>
                             <div id="nav_date">
                                 {{ clock | date:'EEE, d MMMM' }}
@@ -64,12 +64,12 @@
                         </span>
                         <span class="room-booking {{booking.available ? 'available' : 'busy'}}" ng-repeat="booking in room.bookings">
                             <span class="booking-time">
-                                <span class="booking-start_minute">
-                                    {{booking.start_minute}}
+                                <span class="booking-start_time">
+                                    {{booking.start_time}}
                                 </span>
                                 -
-                                <span class="booking-end_minute">
-                                    {{booking.end_minute}}
+                                <span class="booking-end_time">
+                                    {{booking.end_time}}
                                 </span>
                             </span>
 

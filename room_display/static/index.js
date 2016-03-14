@@ -17,6 +17,12 @@ roomDisplayModule.config(function($provide) {
             return (now.getHours() * 60) + now.getMinutes();
         };
 
+        roomDataInstance.formatMinutes = function(minutes) {
+            var m = minutes % 60,
+                h = (minutes - m) / 60;
+            return h + ':' + (m < 10 ? '0' : '') + m;
+        };
+
         /*
             Polling functions
         */
@@ -167,9 +173,11 @@ roomDisplayModule.config(function($provide) {
                 });
             }
 
-            // Work out starts/ends_in_minutes
+            // Work out some extra stuff
             var now = roomDataInstance.currentTimeMinutes();
             parsed_bookings.forEach(function(booking) {
+                booking.start_time = roomDataInstance.formatMinutes(booking.start_minute);
+                booking.end_time = roomDataInstance.formatMinutes(booking.end_minute);
                 booking.starts_in_minutes = booking.start_minute - now;
                 booking.ends_in_minutes = booking.end_minute - now;
             });

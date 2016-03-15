@@ -33,7 +33,7 @@
                                             Dashboard
                                         </a>
                                     </li>
-                                    <li ng-repeat="room in roomDisplay.rooms">
+                                    <li ng-repeat="room in roomDisplay.rooms" class="{{room.first_booking && room.first_booking.available ? 'room-available' : 'room-busy'}}">
                                         <a href="#room-{{$index}}" data-toggle="tab">
                                             {{room.name}}
                                         </a>

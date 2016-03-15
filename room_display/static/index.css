@@ -64,10 +64,10 @@ h1 {
     margin-bottom: 20px;
     padding: 20px;
 }
-.room-booking.available {
+.room-available {
     border-left: 20px solid #299a0b;
 }
-.room-booking.busy {
+.room-busy {
     border-left: 20px solid #cf0404;
 }
 .booking-time {

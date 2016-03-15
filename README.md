@@ -2,6 +2,9 @@
 
 A service to allow easy display of meeting room status from Outlook/Exchange on a web based tablet interface
 
+![Dashboard](https://github.com/csudcy/room_display/blob/master/images/Dashboard.png)
+![Room Menu](https://github.com/csudcy/room_display/blob/master/images/Menu.png)
+![Room Detail](https://github.com/csudcy/room_display/blob/master/images/Room.png)
 
 ## Running
 

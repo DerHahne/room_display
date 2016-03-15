@@ -17,10 +17,8 @@ body {
 .navbar-nav>li>a {
     border: none;
 }
-#fullscreen {
-    position: absolute;
-    right: 10px;
-    display: none;
+.navbar-right>div {
+    float: right;
 }
 
 /*TIME*/

@@ -9,6 +9,7 @@ roomDisplayModule.config(function($provide) {
         // Make it available as a list for the UI
         roomDataInstance.rooms = [];
 
+
         /*
             Util functions
         */
@@ -23,10 +24,10 @@ roomDisplayModule.config(function($provide) {
             return h + ':' + (m < 10 ? '0' : '') + m;
         };
 
+
         /*
             Polling functions
         */
-
         roomDataInstance._poll ={
             enabled: false,
             last_poll_minutes: 0,
@@ -47,10 +48,10 @@ roomDisplayModule.config(function($provide) {
             }
         }, 1000);
 
+
         /*
             Update functions
         */
-
         roomDataInstance.update = function() {
             var current_minutes = roomDataInstance.currentTimeMinutes();
 
@@ -140,7 +141,7 @@ roomDisplayModule.config(function($provide) {
         };
 
         roomDataInstance._parseBookings = function(data) {
-            // TODO: Sort by start time?
+            // Assume server has sorted by start time
 
             // First possible free time is later of now and start of day
             var last_booked_time = Math.max(
@@ -206,6 +207,7 @@ roomDisplayModule.config(function($provide) {
     });
 });
 
+
 roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope) {
     var roomDisplay = this;
 
@@ -215,6 +217,7 @@ roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope
     $roomData.enablePolling();
     //$roomData.update();
 });
+
 
 roomDisplayModule.controller('TimeController', function($scope, $interval) {
     // Ticking Clock
@@ -227,10 +230,12 @@ roomDisplayModule.controller('TimeController', function($scope, $interval) {
 });
 
 
-// document.getElementById('fullscreen').onclick = function() {
-//     var req = document.body.requestFullScreen || document.body.webkitRequestFullScreen || document.body.mozRequestFullScreen;
-//     req.call(document.body.parentNode);
-// };
+// Fullscreen button
+document.getElementById('fullscreen').onclick = function() {
+    var req = document.body.requestFullScreen || document.body.webkitRequestFullScreen || document.body.mozRequestFullScreen;
+    req.call(document.body.parentNode);
+};
+
 
 // Show the page name in the dropdown
 $('#page_changer').on('hidden.bs.dropdown', update_page_name);

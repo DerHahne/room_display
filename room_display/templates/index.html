@@ -42,11 +42,19 @@
                             </li>
                         </ul>
                         <span class="navbar-right" ng-controller='TimeController'>
-                            <div id="nav_time">
-                                {{ clock | date:'HH:mm' }}
+                            <div>
+                                <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" id="fullscreen">
+                                    <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                                </button>
                             </div>
-                            <div id="nav_date">
-                                {{ clock | date:'EEE, d MMMM' }}
+
+                            <div>
+                                <div id="nav_time">
+                                    {{ clock | date:'HH:mm' }}
+                                </div>
+                                <div id="nav_date">
+                                    {{ clock | date:'EEE, d MMMM' }}
+                                </div>
                             </div>
                         </span>
                     </div>
@@ -54,10 +62,6 @@
             </nav>
 
             <div class="jumbotron tab-content">
-                <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" id="fullscreen">
-                    <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                </button>
-
                 <div class="tab-pane active" id="Dashboard">
                     <span class="room" ng-repeat="room in roomDisplay.rooms">
                         <h1 class="room-name">

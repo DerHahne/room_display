@@ -17,6 +17,11 @@ body {
 .navbar-nav>li>a {
     border: none;
 }
+#fullscreen {
+    position: absolute;
+    right: 10px;
+    display: none;
+}
 
 /*TIME*/
 #nav_time {
@@ -35,19 +40,17 @@ body {
     font-size: 35pt;
     vertical-align: middle;
 }
+.dropdown-menu li a {
+    font-size: 20pt;
+}
 
-
+/*Tabs*/
 .tab-pane {
     margin-top: 60px;
 }
 h1 {
     text-align: center;
     text-shadow: none;
-}
-#fullscreen {
-    position: absolute;
-    right: 10px;
-    display: none;
 }
 .room {
     display: block;

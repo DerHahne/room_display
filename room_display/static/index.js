@@ -50,7 +50,7 @@ roomDisplayModule.config(function($provide) {
 
 
         /*
-            Update functions
+            Data update functions
         */
         roomDataInstance.update = function() {
             var current_minutes = roomDataInstance.currentTimeMinutes();
@@ -88,7 +88,7 @@ roomDisplayModule.config(function($provide) {
                     roomDataInstance.parseData(response.data);
 
                     // Update the changing information
-                    roomDataInstance.updateRoomBookings();
+                    roomDataInstance._updateRoomBookingsNow();
                 });
             // TODO: Error handling
         };
@@ -187,15 +187,33 @@ roomDisplayModule.config(function($provide) {
             });
         };
 
+
+        /*
+            Time update functions
+        */
+        roomDataInstance._last_update_minutes = 0;
         roomDataInstance.updateRoomBookings = function() {
-            var now = roomDataInstance.currentTimeMinutes();
+            var current_minutes = roomDataInstance.currentTimeMinutes();
+
+            if (roomDataInstance._last_update_minutes !== current_minutes) {
+                roomDataInstance._updateRoomBookingsNow();
+            }
+        };
+
+        roomDataInstance._updateRoomBookingsNow = function() {
+            var current_minutes = roomDataInstance.currentTimeMinutes();
+
+            // Record that the rooms have been updated
+            roomDataInstance._last_update_minutes = current_minutes;
+
+            // Update the rooms
             Object.keys(roomDataInstance.roomData).forEach(function(room_id) {
                 var room = roomDataInstance.roomData[room_id];
 
                 // Update the changing information for _all_bookings e.g. starts_in_minutes
                 room._all_bookings.forEach(function(booking) {
-                    booking.starts_in_minutes = booking.start_minute - now;
-                    booking.ends_in_minutes = booking.end_minute - now;
+                    booking.starts_in_minutes = booking.start_minute - current_minutes;
+                    booking.ends_in_minutes = booking.end_minute - current_minutes;
                 });
 
                 // Update bookings to be future bookings from _all_bookings

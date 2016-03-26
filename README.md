@@ -8,7 +8,9 @@ A service to allow easy display of meeting room status from Outlook/Exchange on 
 
 ## Running
 
-The easiest way to run the server is using docker-compose:
+### Docker
+
+The easiest way to run the server is using [docker-compose](https://docs.docker.com/compose/):
 ```bash
 cp config.env.template config.env
 vi config.env
@@ -17,11 +19,27 @@ docker-compose up
 ```
 Once the image has finished building & everything is running, you should be able to hit [http://192.168.99.100:5000] to view the website.
 
+### Heroku
+
+[Heroku](https://www.heroku.com/) should automatically work via the `Procfile`
+
+### Cloud9
+
+To run on [Cloud9](https://c9.io/) (and possibly Debian based Linux in general): 
+```bash
+sudo apt-get install python-lxml
+sudo pip install -r requirements.txt
+python room_display/app.py runserver
+```
+
 
 ## Settings
 
-The following environment variables need to be set for the app to work:
-* Exchange settings:
+The following environment variables can be set:
+* Server settings:
+  * `IP`: The IP to bind the web server to (defaults to `0.0.0.0`)
+  * `PORT`: The port to bind the web server to (defaults to `5000`)
+* Exchange settings (all optional):
   * `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
     * If this is left blank, the server will operate in a demonstration mode (using example data)
   * `OUTLOOK_EWS_URL`: URL to the EWS endpoint on the exchange server e.g. [https://<your exchange server>/EWS/Exchange.asmx]

@@ -99,8 +99,22 @@ def data():
 ##################################################
 
 manager = Manager(app)
+
 # Bind the dev server to 0.0.0.0 so it works through Docker
-manager.add_command('runserver', Server(host='0.0.0.0'))
+#manager.add_command('runserver', Server(host='0.0.0.0'))
+
+@manager.command
+def runserver():
+    """
+    Run the server
+    """
+    # Get the IP & port
+    host = os.environ.get('HOST', '0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+
+    # Go go go
+    print('Running on port {HOST}:{PORT}'.format(HOST=host, PORT=port))
+    app.run(host=host, port=port)
 
 @manager.command
 def production():
@@ -109,11 +123,8 @@ def production():
     """
     # Turn off debug on live...
     app.debug = False
-
-    # Bind to PORT if defined, otherwise default to 5000.
-    port = int(os.environ.get('PORT', 5000))
-    print('Running on port {PORT}'.format(PORT=port))
-    app.run(host='0.0.0.0', port=port)
+    
+    runserver()
 
 
 if __name__ == '__main__':

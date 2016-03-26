@@ -33,7 +33,7 @@
                                             Dashboard
                                         </a>
                                     </li>
-                                    <li ng-repeat="room in roomDisplay.rooms" class="{{room.first_booking && room.first_booking.available ? 'room-available' : 'room-busy'}}">
+                                    <li ng-repeat="room in rooms" class="{{room.first_booking && room.first_booking.available ? 'room-available' : 'room-busy'}}">
                                         <a href="#room-{{$index}}" data-toggle="tab">
                                             {{room.name}}
                                         </a>
@@ -63,7 +63,7 @@
 
             <div class="jumbotron tab-content">
                 <div class="tab-pane active" id="Dashboard">
-                    <span class="room" ng-repeat="room in roomDisplay.rooms">
+                    <span class="room" ng-repeat="room in rooms">
                         <h1 class="room-name">
                             {{room.name}}
                         </h1>
@@ -76,7 +76,7 @@
                     </span>
                 </div>
 
-                <div class="tab-pane detail busy" id="room-{{$index}}" ng-repeat="room in roomDisplay.rooms">
+                <div class="tab-pane detail busy" id="room-{{$index}}" ng-repeat="room in rooms">
                     <span ng-repeat="booking in room.bookings">
                         <span ng-include src="'static/booking.html'"></span>
                     </span>

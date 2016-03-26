@@ -28,7 +28,7 @@ roomDisplayModule.config(function($provide) {
         /*
             Polling functions
         */
-        roomDataInstance._poll ={
+        roomDataInstance._poll = {
             enabled: false,
             last_poll_minutes: 0,
             // Until the first server poll, assume polling minutely from midnight to midnight
@@ -76,9 +76,11 @@ roomDisplayModule.config(function($provide) {
         };
 
         roomDataInstance.updateNow = function() {
+            console.log('Fetching room data...');
             $http
                 .get('/data')
                 .then(function(response) {
+                    console.log('Parsing room data...');
                     roomDataInstance.parseData(response.data);
                 });
             // TODO: Error handling
@@ -122,7 +124,7 @@ roomDisplayModule.config(function($provide) {
 
         roomDataInstance._updateRoomBookings = function(room) {
             // Get parsed future bookings
-            var future_bookings = roomDataInstance._getFutureBookings(room.bookings)
+            var future_bookings = roomDataInstance._getFutureBookings(room.bookings),
                 parsed_future_bookings = roomDataInstance._parseBookings(future_bookings);
 
             // Update bookings
@@ -212,10 +214,9 @@ roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope
     var roomDisplay = this;
 
     // Make the list of rooms available to the template
-    roomDisplay.rooms = $roomData.rooms;
+    $scope.rooms = $roomData.rooms;
 
     $roomData.enablePolling();
-    //$roomData.update();
 });
 
 

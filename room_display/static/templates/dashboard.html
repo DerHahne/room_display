@@ -1,0 +1,11 @@
+<span class="room" ng-repeat="room in rooms">
+    <h1 class="room-name">
+        {{room.name}}
+    </h1>
+    <span ng-if="room.first_booking">
+        <span ng-include src="'static/templates/booking.html'" ng-init="booking = room.first_booking"></span>
+    </span>
+    <span ng-if="!room.first_booking">
+        No more bookings!
+    </span>
+</span>

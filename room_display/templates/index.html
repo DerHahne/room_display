@@ -15,74 +15,7 @@
     </head>
 
     <body>
-        <div class="tabbable" ng-controller="RoomDisplayController as roomDisplay">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown active navbar-left" id="page_changer">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-                                    <span id="page_name">
-                                        ...
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="active">
-                                        <a href="#Dashboard" data-toggle="tab">
-                                            Dashboard
-                                        </a>
-                                    </li>
-                                    <li ng-repeat="room in rooms" class="{{room.first_booking && room.first_booking.available ? 'room-available' : 'room-busy'}}">
-                                        <a href="#room-{{$index}}" data-toggle="tab">
-                                            {{room.name}}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span class="navbar-right" ng-controller='TimeController'>
-                            <div>
-                                <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" id="fullscreen">
-                                    <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                                </button>
-                            </div>
-
-                            <div>
-                                <div id="nav_time">
-                                    {{ clock | date:'HH:mm' }}
-                                </div>
-                                <div id="nav_date">
-                                    {{ clock | date:'EEE, d MMMM' }}
-                                </div>
-                            </div>
-                        </span>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="jumbotron tab-content">
-                <div class="tab-pane active" id="Dashboard">
-                    <span class="room" ng-repeat="room in rooms">
-                        <h1 class="room-name">
-                            {{room.name}}
-                        </h1>
-                        <span ng-if="room.first_booking">
-                            <span ng-include src="'static/templates/booking.html'" ng-init="booking = room.first_booking"></span>
-                        </span>
-                        <span ng-if="!room.first_booking">
-                            No more bookings!
-                        </span>
-                    </span>
-                </div>
-
-                <div class="tab-pane detail busy" id="room-{{$index}}" ng-repeat="room in rooms">
-                    <span ng-repeat="booking in room.bookings">
-                        <span ng-include src="'static/templates/booking.html'"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <span ng-include src="'static/templates/content.html'"></span>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>

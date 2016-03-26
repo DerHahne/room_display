@@ -124,8 +124,8 @@ roomDisplayModule.config(function($provide) {
 
         roomDataInstance._updateRoomBookings = function(room) {
             // Get parsed future bookings
-            var future_bookings = roomDataInstance._getFutureBookings(room.bookings),
-                parsed_future_bookings = roomDataInstance._parseBookings(future_bookings);
+            var parsed_bookings = roomDataInstance._parseBookings(room.bookings),
+                parsed_future_bookings = roomDataInstance._getFutureBookings(parsed_bookings);
 
             // Update bookings
             roomDataInstance.roomData[room.id].bookings.length = 0;

@@ -72,6 +72,9 @@ roomDisplayModule.config(function($provide) {
             if (poll_now) {
                 // It's pollin' time!
                 roomDataInstance.updateNow();
+            } else {
+                // Check if anything (e.g. current booking) has changed
+                roomDataInstance.updateRoomBookings();
             }
         };
 
@@ -81,7 +84,11 @@ roomDisplayModule.config(function($provide) {
                 .get('/data')
                 .then(function(response) {
                     console.log('Parsing room data...');
+                    // Parse & store the new information
                     roomDataInstance.parseData(response.data);
+
+                    // Update the changing information
+                    roomDataInstance.updateRoomBookings();
                 });
             // TODO: Error handling
         };
@@ -104,7 +111,7 @@ roomDisplayModule.config(function($provide) {
             // Get room data into dictionary structure to make updating easier
             data.forEach(function(room) {
                 roomDataInstance._updateRoom(room);
-                roomDataInstance._updateRoomBookings(room);
+                roomDataInstance.roomData[room.id]._all_bookings = roomDataInstance._parseBookings(room.bookings);
             });
         };
 
@@ -112,6 +119,7 @@ roomDisplayModule.config(function($provide) {
             // If this is a new room, add it
             if (roomDataInstance.roomData[room.id] === undefined) {
                 roomDataInstance.roomData[room.id] = {
+                    _all_bookings: [],
                     bookings: []
                 };
             }
@@ -122,34 +130,11 @@ roomDisplayModule.config(function($provide) {
             roomDataInstance.roomData[room.id].description = room.description;
         };
 
-        roomDataInstance._updateRoomBookings = function(room) {
-            // Get parsed future bookings
-            var parsed_bookings = roomDataInstance._parseBookings(room.bookings),
-                parsed_future_bookings = roomDataInstance._getFutureBookings(parsed_bookings);
-
-            // Update bookings
-            roomDataInstance.roomData[room.id].bookings.length = 0;
-            parsed_future_bookings.forEach(function(booking) {
-                roomDataInstance.roomData[room.id].bookings.push(booking);
-            });
-            roomDataInstance.roomData[room.id].first_booking = roomDataInstance.roomData[room.id].bookings[0];
-        };
-
-        roomDataInstance._getFutureBookings = function(data) {
-            var current_minutes = roomDataInstance.currentTimeMinutes();
-            return data.filter(function(booking) {
-                return current_minutes < booking.end_minute;
-            });
-        };
-
         roomDataInstance._parseBookings = function(data) {
             // Assume server has sorted by start time
 
             // First possible free time is later of now and start of day
-            var last_booked_time = Math.max(
-                    roomDataInstance.currentTimeMinutes(),
-                    roomDataInstance._poll.start_minute
-                ),
+            var last_booked_time = roomDataInstance._poll.start_minute,
                 parsed_bookings = [];
 
             data.forEach(function(booking) {
@@ -176,13 +161,10 @@ roomDisplayModule.config(function($provide) {
                 });
             }
 
-            // Work out some extra stuff
-            var now = roomDataInstance.currentTimeMinutes();
+            // Format some stuff nicely that doesn't change
             parsed_bookings.forEach(function(booking) {
                 booking.start_time = roomDataInstance.formatMinutes(booking.start_minute);
                 booking.end_time = roomDataInstance.formatMinutes(booking.end_minute);
-                booking.starts_in_minutes = booking.start_minute - now;
-                booking.ends_in_minutes = booking.end_minute - now;
             });
 
             return parsed_bookings;
@@ -203,6 +185,32 @@ roomDisplayModule.config(function($provide) {
             roomDataInstance.rooms.sort(function compare(r1, r2) {
                 return r1.name > r2.name;
             });
+        };
+
+        roomDataInstance.updateRoomBookings = function() {
+            var now = roomDataInstance.currentTimeMinutes();
+            Object.keys(roomDataInstance.roomData).forEach(function(room_id) {
+                var room = roomDataInstance.roomData[room_id];
+
+                // Update the changing information for _all_bookings e.g. starts_in_minutes
+                room._all_bookings.forEach(function(booking) {
+                    booking.starts_in_minutes = booking.start_minute - now;
+                    booking.ends_in_minutes = booking.end_minute - now;
+                });
+
+                // Update bookings to be future bookings from _all_bookings
+                roomDataInstance._updateCurrentBookings(room);
+
+                // Update the first meeting
+                room.first_booking = roomDataInstance.roomData[room.id].bookings[0];
+            });
+        };
+
+        roomDataInstance._updateCurrentBookings = function(room) {
+            var future_bookings = room._all_bookings.filter(function(booking) {
+                    return booking.ends_in_minutes >= 0;
+                });
+            angular.copy(future_bookings, room.bookings);
         };
 
         return roomDataInstance;

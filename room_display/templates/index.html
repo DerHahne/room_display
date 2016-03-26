@@ -68,7 +68,7 @@
                             {{room.name}}
                         </h1>
                         <span ng-if="room.first_booking">
-                            <span ng-include src="'static/booking.html'" ng-init="booking = room.first_booking"></span>
+                            <span ng-include src="'static/templates/booking.html'" ng-init="booking = room.first_booking"></span>
                         </span>
                         <span ng-if="!room.first_booking">
                             No more bookings!
@@ -78,7 +78,7 @@
 
                 <div class="tab-pane detail busy" id="room-{{$index}}" ng-repeat="room in rooms">
                     <span ng-repeat="booking in room.bookings">
-                        <span ng-include src="'static/booking.html'"></span>
+                        <span ng-include src="'static/templates/booking.html'"></span>
                     </span>
                 </div>
             </div>

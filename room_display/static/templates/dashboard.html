@@ -1,11 +1,44 @@
-<span class="room" ng-repeat="room in rooms">
-    <h1 class="room-name">
-        {{room.name}}
-    </h1>
+<span class="dashboard-room" ng-repeat="room in rooms">
     <span ng-if="room.first_booking">
-        <span ng-include src="'static/templates/booking.html'" ng-init="booking = room.first_booking"></span>
+        <span class="dashboard-room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
+
+            <span class="dashboard-room-name">
+                {{room.name}}
+            </span>
+
+            <span class="dashboard-booking-details">
+                <span class="dashboard-booking-availability">
+                    <span ng-if="room.first_booking.available">
+                        Available
+                    </span>
+                    <span ng-if="!room.first_booking.available">
+                        Booked
+                    </span>
+                </span>
+
+                <span class="dashboard-booking-duration">
+                    <span ng-if="room.first_booking.starts_in_minutes <= 0">
+                        For {{room.first_booking.ends_in_minutes}} minutes
+                    </span>
+                    <span ng-if="room.first_booking.starts_in_minutes > 0">
+                        In {{room.first_booking.starts_in_minutes}} minutes
+                    </span>
+                    ({{room.first_booking.start_time}} - {{room.first_booking.end_time}})
+                </span>
+
+                <span ng-if="room.first_booking.username" class="dashboard-booking-username">
+                    (By {{room.first_booking.username}})
+                </span>
+
+            </span>
+
+        </span>
     </span>
     <span ng-if="!room.first_booking">
+        <h1 class="dashboard-room-name">
+            {{room.name}}
+        </h1>
+
         No more bookings!
     </span>
 </span>

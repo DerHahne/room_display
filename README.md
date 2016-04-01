@@ -66,6 +66,7 @@ If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" t
 
 Backend:
 * Add makefile?
+* Deal with DST/timezone!
 
 Frontend:
 * Make individual page better

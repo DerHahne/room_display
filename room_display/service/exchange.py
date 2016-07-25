@@ -7,8 +7,6 @@ from pyexchange.exceptions import (FailedExchangeException, ExchangeStaleChangeK
 from pyexchange.exchange2010 import Exchange2010CalendarEvent
 from pyexchange.exchange2010 import soap_request
 
-from .base import BaseCalendar
-
 
 # A monkey patching we do go
 def non_borked_check_for_exchange_fault(self, xml_tree):
@@ -44,17 +42,28 @@ def non_borked_check_for_exchange_fault(self, xml_tree):
 Exchange2010Service._check_for_exchange_fault = non_borked_check_for_exchange_fault
 
 
-class ExchangeCalendar(BaseCalendar):
+class ExchangeCalendar(object):
+
+    TIMEZONE = "GMT"
+    INSTABOOK_SUBJECT = u"Insta-Booking ({length})"
+    INSTABOOK_BODY = u"""
+    <html>
+        <body>
+            <h1>{subject}</h1>
+            <p>This is an Insta-Booking by <a href="https://github.com/csudcy/room_display">Room Display</a></p>
+        </body>
+    </html>"""
+
     def __init__(self, domain, url, username, password):
         super(ExchangeCalendar, self).__init__()
 
-        connection = ExchangeNTLMAuthConnection(url=url,
-                                                username='%s\\%s' % (domain, username),
-                                                password=password)
+        connection = ExchangeNTLMAuthConnection(
+            url=url,
+            username='%s\\%s' % (domain, username),
+            password=password
+        )
         self._service = Exchange2010Service(connection)
-
-    def get_calendar(self):
-        return self._service.calendar()
+        self.calendar = self._service.calendar()
 
     def get_bookings(self, start, end, email_address):
         try:
@@ -62,8 +71,8 @@ class ExchangeCalendar(BaseCalendar):
                 self.calendar_event_to_dict(event)
                 for event in
                 self.calendar.list_events(
-                    start=timezone("GMT").localize(start),
-                    end=timezone("GMT").localize(end),
+                    start=timezone(self.TIMEZONE).localize(start),
+                    end=timezone(self.TIMEZONE).localize(end),
                     details=False,
                     delegate_for=email_address
                 ).events
@@ -74,7 +83,12 @@ class ExchangeCalendar(BaseCalendar):
     @staticmethod
     def calendar_event_to_dict(event):
         if not isinstance(event, Exchange2010CalendarEvent):
-            raise ValueError('{} is not of type {}'.format(type(event), type(Exchange2010CalendarEvent)))
+            raise ValueError(
+                '{} is not of type {}'.format(
+                    type(event),
+                    type(Exchange2010CalendarEvent)
+                )
+            )
 
         return {
             'username': event.organizer.name,

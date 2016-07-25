@@ -9,8 +9,6 @@ from flask_heroku import Heroku
 from flask_script import Manager
 from flask_script import Server
 
-from service.room_display import RoomDisplay
-
 
 ##################################################
 #                    Setup
@@ -20,10 +18,13 @@ app = Flask(__name__)
 app.debug = True
 heroku = Heroku(app)
 
-_allowed_ips = os.environ.get('OUTLOOK_ALLOWED_IPS', '')
+_instabook_times = os.environ.get('INSTABOOK_TIMES', None)
+_allowed_ips = os.environ.get('OUTLOOK_ALLOWED_IPS', None)
 
 config = {
     # Misc settings
+    'host': os.environ.get('HOST', '0.0.0.0'),
+    'port': int(os.environ.get('PORT', 5000)),
     'demo_mode': os.environ.get('DEMO_MODE', None),
 
     # Exchange settings
@@ -45,6 +46,12 @@ config = {
     'poll_interval': os.environ.get('OUTLOOK_POLL_INTERVAL', 1),
     'poll_start_minute': os.environ.get('OUTLOOK_POLL_START_MINUTE', 420),
     'poll_end_minute': os.environ.get('OUTLOOK_POLL_END_MINUTE', 1140),
+
+    # InstaBook settings
+    'instabook_times': [
+        int(ib_time.strip())
+        for ib_time in _instabook_times.split(',')
+    ] if _instabook_times else [15, 30],
 }
 
 DEMO_MODE = False
@@ -54,7 +61,11 @@ if not config['domain']:
     DEMO_MODE = True
 
 ROOM_DISPLAY_SERVICE = None
-if not DEMO_MODE:
+if DEMO_MODE:
+    from service.room_display_demo import RoomDisplayDemo
+    ROOM_DISPLAY_SERVICE = RoomDisplayDemo()
+else:
+    from service.room_display_exchange import RoomDisplayExchange
     ROOM_DISPLAY_SERVICE = RoomDisplay(
         config['domain'],
         config['ews_url'],
@@ -85,22 +96,17 @@ def index():
 
 @app.route('/data')
 def data():
-    # If there is no domain, return the example data
-    if not ROOM_DISPLAY_SERVICE:
-        with open('example_data.json') as f:
-            sample_data = f.read()
-        return jsonify(json.loads(sample_data))
-
-    # Otherwise, get the info from Exchange
+    # Get booking info from the room display service
     start = datetime.today().replace(hour=0, minute=0, second=0)
     end = datetime.today().replace(hour=23, minute=59, second=59)
     data = {
-        "polling": {
-            "interval": config['poll_interval'],
-            "start_minute": config['poll_start_minute'],
-            "end_minute": config['poll_end_minute'],
+        'polling': {
+            'interval': config['poll_interval'],
+            'start_minute': config['poll_start_minute'],
+            'end_minute': config['poll_end_minute'],
+            'instabook_times': config['instabook_times'],
         },
-        "rooms": ROOM_DISPLAY_SERVICE.get_room_data(start, end)
+        'rooms': ROOM_DISPLAY_SERVICE.get_room_data(start, end)
     }
     return jsonify(data)
 
@@ -119,13 +125,14 @@ def runserver():
     """
     Run the server
     """
-    # Get the IP & port
-    host = os.environ.get('HOST', '0.0.0.0')
-    port = int(os.environ.get('PORT', 5000))
-
     # Go go go
-    print('Running on port {HOST}:{PORT}'.format(HOST=host, PORT=port))
-    app.run(host=host, port=port)
+    print(
+        'Running on port {HOST}:{PORT}'.format(
+            HOST=config['host'],
+            PORT=config['port']
+        )
+    )
+    app.run(host=config['host'], port=config['port'])
 
 @manager.command
 def production():

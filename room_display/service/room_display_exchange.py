@@ -3,9 +3,10 @@ from datetime import datetime
 from memoize import Memoizer
 
 from service.exchange import ExchangeCalendar
+from service.room_display_base import RoomDisplayBase
 
 
-class RoomDisplay(object):
+class RoomDisplayExchange(RoomDisplayBase):
     def __init__(
         self,
         domain,
@@ -36,7 +37,7 @@ class RoomDisplay(object):
         self.rooms = dict([
             (room_name, room_email)
             for room_name, room_email in potential_rooms.iteritems()
-            if self.check_room(room_email)
+            if self._check_room(room_email)
         ])
 
         # Apply caching
@@ -45,7 +46,7 @@ class RoomDisplay(object):
             memo = Memoizer(store)
             self.get_room_data = memo(max_age=cache_time)(self.get_room_data)
 
-    def check_room(self, room_email):
+    def _check_room(self, room_email):
         start = datetime.today().replace(hour=0, minute=0, second=0)
         end = datetime.today().replace(hour=23, minute=59, second=59)
 

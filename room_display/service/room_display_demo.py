@@ -12,17 +12,17 @@ class RoomDisplayDemo(RoomDisplayBase):
                     {
                         'username': 'Alice',
                         'start_minute': 9*60,
-                        'end_minute': 570
+                        'end_minute': 9*60+30
                     },
                     {
                         'username': 'Bob',
-                        'start_minute': 840,
-                        'end_minute': 900
+                        'start_minute': 14*60,
+                        'end_minute': 15*60
                     },
                     {
                         'username': 'Alice',
-                        'start_minute': 1020,
-                        'end_minute': 1080
+                        'start_minute': 17*60,
+                        'end_minute': 18*60
                     }
                 ]
             },
@@ -33,8 +33,8 @@ class RoomDisplayDemo(RoomDisplayBase):
                 'bookings': [
                     {
                         'username': 'Eve',
-                        'start_minute': 540,
-                        'end_minute': 1020
+                        'start_minute': 9*60,
+                        'end_minute': 17*60
                     }
                 ]
             }

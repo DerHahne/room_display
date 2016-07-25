@@ -19,7 +19,7 @@ app.debug = True
 heroku = Heroku(app)
 
 _instabook_times = os.environ.get('INSTABOOK_TIMES', None)
-_allowed_ips = os.environ.get('OUTLOOK_ALLOWED_IPS', None)
+_allowed_ips = os.environ.get('ALLOWED_IPS', None)
 
 config = {
     # Misc settings
@@ -34,7 +34,7 @@ config = {
     'password': os.environ.get('OUTLOOK_PASSWORD', None),
     'room_dict': os.environ.get('OUTLOOK_ROOM_DICT', None),
     'room_search_term': os.environ.get('OUTLOOK_ROOM_SEARCH_TERM', None),
-    'cache_time': os.environ.get('CACHE_TIME', 30),
+    'refresh_time_seconds': os.environ.get('OUTLOOK_REFRESH_TIME', 60),
 
     # Security settings
     'allowed_ips': [
@@ -43,9 +43,9 @@ config = {
     ] if _allowed_ips else [],
 
     # Frontend settings
-    'poll_interval': os.environ.get('OUTLOOK_POLL_INTERVAL', 1),
-    'poll_start_minute': os.environ.get('OUTLOOK_POLL_START_MINUTE', 420),
-    'poll_end_minute': os.environ.get('OUTLOOK_POLL_END_MINUTE', 1140),
+    'poll_interval': os.environ.get('POLL_INTERVAL', 1),
+    'poll_start_minute': os.environ.get('POLL_START_MINUTE', 420),
+    'poll_end_minute': os.environ.get('POLL_END_MINUTE', 1140),
 
     # InstaBook settings
     'instabook_times': [
@@ -73,7 +73,7 @@ else:
         config['password'],
         config['room_dict'],
         config['room_search_term'],
-        config['cache_time'],
+        config['refresh_time_seconds'],
     )
 
 
@@ -97,8 +97,6 @@ def index():
 @app.route('/data')
 def data():
     # Get booking info from the room display service
-    start = datetime.today().replace(hour=0, minute=0, second=0)
-    end = datetime.today().replace(hour=23, minute=59, second=59)
     data = {
         'now': datetime.now().isoformat(),
         'polling': {
@@ -107,7 +105,7 @@ def data():
             'end_minute': config['poll_end_minute'],
         },
         'instabook_times': config['instabook_times'],
-        'rooms': ROOM_DISPLAY_SERVICE.get_room_data(start, end)
+        'rooms': ROOM_DISPLAY_SERVICE.get_room_data()
     }
     return jsonify(data)
 

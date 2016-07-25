@@ -1,12 +1,13 @@
 from datetime import datetime
-
-from memoize import Memoizer
+from threading import Thread
+import logging
+import time
 
 from service.exchange import ExchangeCalendar
 from service.room_display_base import RoomDisplayBase
 
 
-class RoomDisplayExchange(RoomDisplayBase):
+class RoomDisplayExchange(RoomDisplayBase, Thread):
     def __init__(
         self,
         domain,
@@ -15,7 +16,7 @@ class RoomDisplayExchange(RoomDisplayBase):
         password,
         room_dict,
         room_search_term,
-        cache_time
+        refresh_time_seconds
     ):
         self.id_namespace = ".".join(reversed(ews_url.split('//', 1)[1].split('/')[0].split('.')))
 
@@ -40,11 +41,16 @@ class RoomDisplayExchange(RoomDisplayBase):
             if self._check_room(room_email)
         ])
 
-        # Apply caching
-        if cache_time:
-            store = {}
-            memo = Memoizer(store)
-            self.get_room_data = memo(max_age=cache_time)(self.get_room_data)
+        # Start the data grabbing thread
+        self._rooms = []
+        self.refresh_time_seconds = refresh_time_seconds
+        Thread.__init__(self)
+        self.start()
+
+    def run(self):
+        while (True):
+            self._update_room_data()
+            time.sleep(self.refresh_time_seconds)
 
     def _check_room(self, room_email):
         start = datetime.today().replace(hour=0, minute=0, second=0)
@@ -57,8 +63,12 @@ class RoomDisplayExchange(RoomDisplayBase):
             return False
         return True
 
-    def get_room_data(self, start, end):
-        print('Fetching data from Exchange...')
+    def _update_room_data(self):
+        logging.warning('Fetching data from Exchange...')
+
+        start = datetime.today().replace(hour=0, minute=0, second=0)
+        end = datetime.today().replace(hour=23, minute=59, second=59)
+
         rooms = []
 
         for room_name, room_email in self.rooms.iteritems():
@@ -73,7 +83,10 @@ class RoomDisplayExchange(RoomDisplayBase):
             }
             rooms.append(meeting_room_details)
 
-        return rooms
+        self._rooms = rooms
+
+    def get_room_data(self):
+        return self._rooms
 
     def _transform_booking_info(self, booking):
         start = booking.pop('start')
@@ -102,5 +115,5 @@ class RoomDisplayExchange(RoomDisplayBase):
             description
         )
 
-        # Invalidate the cache so the next data call will include the new booking
-        self.get_room_data.delete()
+        # Get the latest Exchange data now
+        self._update_room_data()

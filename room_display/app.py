@@ -87,7 +87,9 @@ def index():
 def data():
     # If there is no domain, return the example data
     if not ROOM_DISPLAY_SERVICE:
-        return flask.send_file('../example_data.json')
+        with open('example_data.json') as f:
+            sample_data = f.read()
+        return jsonify(json.loads(sample_data))
 
     # Otherwise, get the info from Exchange
     start = datetime.today().replace(hour=0, minute=0, second=0)

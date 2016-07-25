@@ -46,7 +46,7 @@ Exchange2010Service._check_for_exchange_fault = non_borked_check_for_exchange_fa
 
 
 class ExchangeCalendar(object):
-    TIMEZONE = "Europe/London"
+    TIMEZONE = timezone("Europe/London")
 
     def __init__(self, domain, url, username, password):
         super(ExchangeCalendar, self).__init__()
@@ -60,8 +60,8 @@ class ExchangeCalendar(object):
         self.calendar = self._service.calendar()
 
     def get_bookings(self, start, end, email_address):
-        start = timezone(self.TIMEZONE).localize(start)
-        end = timezone(self.TIMEZONE).localize(end)
+        start = self.TIMEZONE.localize(start)
+        end = self.TIMEZONE.localize(end)
 
         logger.debug(
             'Getting bookings for {email_address} from {start} to {end}...'.format(
@@ -93,9 +93,7 @@ class ExchangeCalendar(object):
                 )
             )
 
-
-    @staticmethod
-    def _calendar_event_to_dict(event):
+    def _calendar_event_to_dict(self, event):
         if not isinstance(event, Exchange2010CalendarEvent):
             raise ValueError(
                 '{} is not of type {}'.format(
@@ -109,8 +107,8 @@ class ExchangeCalendar(object):
             'email_address': event.organizer.email,
             'subject': event.subject.strip(),
             'description': event.text_body,
-            'start': event.start,
-            'end': event.end,
+            'start': event.start.astimezone(self.TIMEZONE),
+            'end': event.end.astimezone(self.TIMEZONE),
         }
 
     def get_contacts(self, search):
@@ -130,8 +128,8 @@ class ExchangeCalendar(object):
         event = self.calendar.new_event(
             resources=[room_email],
             location=room_email,
-            start=timezone(self.TIMEZONE).localize(start),
-            end=timezone(self.TIMEZONE).localize(end),
+            start=self.TIMEZONE.localize(start),
+            end=self.TIMEZONE.localize(end),
             subject=subject,
             html_body=description
         )

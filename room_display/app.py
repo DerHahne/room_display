@@ -66,7 +66,7 @@ if DEMO_MODE:
     ROOM_DISPLAY_SERVICE = RoomDisplayDemo()
 else:
     from service.room_display_exchange import RoomDisplayExchange
-    ROOM_DISPLAY_SERVICE = RoomDisplay(
+    ROOM_DISPLAY_SERVICE = RoomDisplayExchange(
         config['domain'],
         config['ews_url'],
         config['username'],

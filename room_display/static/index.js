@@ -28,8 +28,6 @@ roomDisplayModule.config(function($provide) {
             var hours = Math.floor(minutes / 60),
                 remaining_minutes = minutes - (60 * hours);
 
-            console.log(hours + '  ' +  minutes);
-
             var ret = 'around '
             if (hours == 1) {
                 ret += 'an hour and '

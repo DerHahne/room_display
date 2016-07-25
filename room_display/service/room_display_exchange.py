@@ -75,10 +75,9 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
 
         for room_name, room_email in self.rooms.iteritems():
             meeting_room_details = {
-                "id": room_email,
-                "name": room_name,
-                "description": None,
-                "bookings": [
+                'id': room_email,
+                'name': room_name,
+                'bookings': [
                     self._transform_booking_info(booking)
                     for booking in self.exchange.get_bookings(start, end, room_email)
                 ]

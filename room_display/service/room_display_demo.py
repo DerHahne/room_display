@@ -7,7 +7,6 @@ class RoomDisplayDemo(RoomDisplayBase):
             'room_awesome': {
                 'id': 'room_awesome',
                 'name': 'Awesome Room',
-                'description': '10, Display, Aircon, Wifi, Cats',
                 'bookings': [
                     {
                         'username': 'Alice',
@@ -29,7 +28,6 @@ class RoomDisplayDemo(RoomDisplayBase):
             'room_boring': {
                 'id': 'room_boring',
                 'name': 'Boring Room',
-                'description': '4',
                 'bookings': [
                     {
                         'username': 'Eve',

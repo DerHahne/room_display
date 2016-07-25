@@ -94,7 +94,7 @@ def index():
     return flask.send_file('./templates/index.html')
 
 
-@app.route('/data')
+@app.route('/data_FUCK')
 def data():
     # Get booking info from the room display service
     start = datetime.today().replace(hour=0, minute=0, second=0)

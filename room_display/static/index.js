@@ -84,7 +84,7 @@ roomDisplayModule.config(function($provide) {
         roomDataInstance.updateNow = function() {
             console.log('Fetching room data...');
             $http
-                .get('/data')
+                .get('/data_FUCK')
                 .then(function(response) {
                     console.log('Parsing room data...');
                     // Parse & store the new information

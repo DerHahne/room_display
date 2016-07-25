@@ -45,6 +45,8 @@ roomDisplayModule.config(function($provide) {
                 ret += ret ? 'a half' : 'half an hour'
             } else if (remaining_minutes <= 50) {
                 ret += '45 minutes'
+            } else {
+                ret = ret ? '2 hours' : 'an hour'
             }
             return ret
         }
@@ -304,6 +306,7 @@ function init() {
 
     // Update the page name when the dropdown changes
     $('#page_changer').on('hidden.bs.dropdown', update_page_name);
+    $('.dashboard-room-booking').on('click', update_page_name);
 
     //Show the current page name
     update_page_name();

@@ -59,7 +59,7 @@ class ExchangeCalendar(object):
     def get_bookings(self, start, end, email_address):
         try:
             return [
-                self.calendar_event_to_dict(event)
+                self._calendar_event_to_dict(event)
                 for event in
                 self.calendar.list_events(
                     start=timezone(self.TIMEZONE).localize(start),
@@ -72,7 +72,7 @@ class ExchangeCalendar(object):
             raise RuntimeError(str(ex))
 
     @staticmethod
-    def calendar_event_to_dict(event):
+    def _calendar_event_to_dict(event):
         if not isinstance(event, Exchange2010CalendarEvent):
             raise ValueError(
                 '{} is not of type {}'.format(

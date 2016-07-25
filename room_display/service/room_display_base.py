@@ -1,5 +1,8 @@
 from abc import ABCMeta, abstractmethod
 import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class RoomDisplayBase(object):
@@ -48,6 +51,13 @@ class RoomDisplayBase(object):
         start = datetime.datetime.now()
         end = start + datetime.timedelta(minutes=length)
 
+        logger.debug(
+            'Adding booking for "{room_id}" from {start} to {end}...'.format(#
+                room_id=room_id,
+                start=start,
+                end=end,
+            )
+        )
 
         # Check the room is free right now
         if not self._is_free(room_id, start, end):
@@ -68,6 +78,14 @@ class RoomDisplayBase(object):
             end,
             subject,
             description
+        )
+
+        logger.debug(
+            'Adding booking for "{room_id}" from {start} to {end} done!'.format(#
+                room_id=room_id,
+                start=start,
+                end=end,
+            )
         )
 
         return {'success': True}

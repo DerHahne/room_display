@@ -6,6 +6,8 @@ import time
 from service.exchange import ExchangeCalendar
 from service.room_display_base import RoomDisplayBase
 
+logger = logging.getLogger(__name__)
+
 
 class RoomDisplayExchange(RoomDisplayBase, Thread):
     def __init__(
@@ -46,13 +48,13 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         self.start()
 
     def run(self):
-        logging.warning(datetime.now().isoformat() + ' Data thread: Starting...')
+        logger.debug('Data thread: Starting...')
         while (True):
-            logging.warning(datetime.now().isoformat() + ' Data thread: Fetching...')
+            logger.debug('Data thread: Fetching...')
             self._update_room_data()
-            logging.warning(datetime.now().isoformat() + ' Data thread: Waiting...')
+            logger.debug('Data thread: Waiting...')
             time.sleep(self.refresh_time_seconds)
-        logging.warning(datetime.now().isoformat() + ' Data thread: Done!')
+        logger.debug('Data thread: Done!')
 
     def _check_room(self, room_email):
         start = datetime.today().replace(hour=0, minute=0, second=0)
@@ -66,8 +68,6 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         return True
 
     def _update_room_data(self):
-        logging.warning('Fetching data from Exchange...')
-
         start = datetime.today().replace(hour=0, minute=0, second=0)
         end = datetime.today().replace(hour=23, minute=59, second=59)
 

@@ -1,4 +1,4 @@
-from pytz import timezone
+import logging
 
 from pyexchange import Exchange2010Service, ExchangeNTLMAuthConnection
 from pyexchange.exceptions import (FailedExchangeException, ExchangeStaleChangeKeyException,
@@ -6,6 +6,9 @@ from pyexchange.exceptions import (FailedExchangeException, ExchangeStaleChangeK
                                    ExchangeInternalServerTransientErrorException)
 from pyexchange.exchange2010 import Exchange2010CalendarEvent
 from pyexchange.exchange2010 import soap_request
+from pytz import timezone
+
+logger = logging.getLogger(__name__)
 
 
 # A monkey patching we do go
@@ -43,7 +46,7 @@ Exchange2010Service._check_for_exchange_fault = non_borked_check_for_exchange_fa
 
 
 class ExchangeCalendar(object):
-    TIMEZONE = "GMT"
+    TIMEZONE = "Europe/London"
 
     def __init__(self, domain, url, username, password):
         super(ExchangeCalendar, self).__init__()
@@ -57,19 +60,39 @@ class ExchangeCalendar(object):
         self.calendar = self._service.calendar()
 
     def get_bookings(self, start, end, email_address):
+        start = timezone(self.TIMEZONE).localize(start)
+        end = timezone(self.TIMEZONE).localize(end)
+
+        logger.debug(
+            'Getting bookings for {email_address} from {start} to {end}...'.format(
+                start=start.isoformat(),
+                end=end.isoformat(),
+                email_address=email_address
+            )
+        )
+
         try:
             return [
                 self._calendar_event_to_dict(event)
                 for event in
                 self.calendar.list_events(
-                    start=timezone(self.TIMEZONE).localize(start),
-                    end=timezone(self.TIMEZONE).localize(end),
+                    start=start,
+                    end=end,
                     details=False,
                     delegate_for=email_address
                 ).events
             ]
         except FailedExchangeException as ex:
             raise RuntimeError(str(ex))
+        finally:
+            logger.debug(
+                'Getting bookings for {email_address} from {start} to {end} done!'.format(
+                    start=start.isoformat(),
+                    end=end.isoformat(),
+                    email_address=email_address
+                )
+            )
+
 
     @staticmethod
     def _calendar_event_to_dict(event):
@@ -95,7 +118,7 @@ class ExchangeCalendar(object):
 
     def add_booking(
             self,
-            room_id,
+            room_email,
             start,
             end,
             subject,
@@ -105,8 +128,8 @@ class ExchangeCalendar(object):
 
         # Create the event
         event = self.calendar.new_event(
-            attendees=[room_id],
-            location=room_id,
+            resources=[room_email],
+            location=room_email,
             start=timezone(self.TIMEZONE).localize(start),
             end=timezone(self.TIMEZONE).localize(end),
             subject=subject,

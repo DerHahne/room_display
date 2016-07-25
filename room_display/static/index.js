@@ -226,7 +226,7 @@ roomDisplayModule.config(function($provide) {
             if (roomDataInstance._poll.enabled) {
                 roomDataInstance.update();
             }
-        }, 10000);
+        }, 1000);
         // Update as soon as we start
         roomDataInstance.update();
 

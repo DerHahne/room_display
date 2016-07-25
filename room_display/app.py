@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import sys
 from datetime import datetime
@@ -13,6 +14,12 @@ from flask_script import Server
 ##################################################
 #                    Setup
 ##################################################
+
+# Logging
+logging.basicConfig(format='%(levelname)s :: %(asctime)s :: %(name)s :: %(message)s', level=logging.DEBUG)
+logging.getLogger('requests').setLevel(logging.WARNING)
+logging.getLogger('pyexchange').setLevel(logging.WARNING)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.debug = True
@@ -64,9 +71,11 @@ if not config['domain']:
 
 ROOM_DISPLAY_SERVICE = None
 if DEMO_MODE:
+    logger.debug('Using demo backend...')
     from service.room_display_demo import RoomDisplayDemo
     ROOM_DISPLAY_SERVICE = RoomDisplayDemo()
 else:
+    logger.debug('Using Exchange backend...')
     from service.room_display_exchange import RoomDisplayExchange
     ROOM_DISPLAY_SERVICE = RoomDisplayExchange(
         config['domain'],

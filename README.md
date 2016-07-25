@@ -71,11 +71,15 @@ If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" t
 
 Backend:
 * Add makefile?
-* Deal with DST/timezone!
 
 Frontend:
-* Make individual page better
-* Improve click on room in dashboard
+* InstaBooking:
+  * Make it work on Exchange!
+  * Check if the room is free
+  * Show a confirmation dialog
+  * Spinner until backend returns success
+  * Let the user know if there was an error booking
+* Click on room in dashboard
   * Make it work when there are no bookings
   * Make the tick/cross clickable
 * Fix dashboard updating - Angular doesnt seem to pickup when `first_booking` is changed?
@@ -85,7 +89,6 @@ Frontend:
 
 Extra ideas:
 * Move to timestamps instead of minutes (to support multi-day meetings)
-* Add insta-bookings
 * Theme switching with https://github.com/jguadagno/bootstrapThemeSwitcher
 * Room locations
 * eInk/RaspberryPi Display

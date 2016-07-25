@@ -3,39 +3,77 @@ from service.room_display_base import RoomDisplayBase
 
 class RoomDisplayDemo(RoomDisplayBase):
     def __init__(self):
+        def booking(username, h, m, l):
+            start_minute = h * 60 + m
+            return {
+                'username': username,
+                'start_minute': start_minute,
+                'end_minute': start_minute + l
+            }
         self.rooms = {
-            'room_awesome': {
-                'id': 'room_awesome',
-                'name': 'Awesome Room',
+            'red_room': {
+                'id': 'red_room',
+                'name': 'Red Room',
                 'bookings': [
-                    {
-                        'username': 'Alice',
-                        'start_minute': 9*60,
-                        'end_minute': 9*60+30
-                    },
-                    {
-                        'username': 'Bob',
-                        'start_minute': 14*60,
-                        'end_minute': 15*60
-                    },
-                    {
-                        'username': 'Alice',
-                        'start_minute': 17*60,
-                        'end_minute': 18*60
-                    }
+                    booking('Alice', 9, 15, 30),
+                    booking('Bob', 10, 0, 120),
+                    booking('Carol', 12, 0, 60),
                 ]
             },
-            'room_boring': {
-                'id': 'room_boring',
-                'name': 'Boring Room',
+            'orange_room': {
+                'id': 'orange_room',
+                'name': 'Orange Room',
                 'bookings': [
-                    {
-                        'username': 'Eve',
-                        'start_minute': 9*60,
-                        'end_minute': 17*60
-                    }
+                    booking('Alice', 9, 45, 30),
+                    booking('Bob', 11, 0, 120),
+                    booking('Carol', 13, 0, 60),
                 ]
-            }
+            },
+            'yellow_room': {
+                'id': 'yellow_room',
+                'name': 'Yellow Room',
+                'bookings': [
+                    booking('Alice', 10, 15, 30),
+                    booking('Bob', 12, 0, 120),
+                    booking('Carol', 14, 0, 60),
+                ]
+            },
+            'green_room': {
+                'id': 'green_room',
+                'name': 'Green Room',
+                'bookings': [
+                    booking('Alice', 10, 45, 30),
+                    booking('Bob', 13, 0, 120),
+                    booking('Carol', 15, 0, 60),
+                ]
+            },
+            'blue_room': {
+                'id': 'blue_room',
+                'name': 'Blue Room',
+                'bookings': [
+                    booking('Alice', 11, 15, 30),
+                    booking('Bob', 14, 0, 120),
+                    booking('Carol', 16, 0, 60),
+                ]
+            },
+            'indigo_room': {
+                'id': 'indigo_room',
+                'name': 'Indigo Room',
+                'bookings': [
+                    booking('Alice', 11, 45, 30),
+                    booking('Bob', 15, 0, 120),
+                    booking('Carol', 17, 0, 60),
+                ]
+            },
+            'violet_room': {
+                'id': 'violet_room',
+                'name': 'Violet Room',
+                'bookings': [
+                    booking('Alice', 12, 15, 30),
+                    booking('Bob', 16, 0, 120),
+                    booking('Carol', 18, 0, 60),
+                ]
+            },
         }
 
     def get_room_data(self):

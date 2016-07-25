@@ -3,7 +3,12 @@ body {
     color: #fff;
     background: #1c1e22;
 }
-
+ul {
+    padding-left: 10px;
+}
+li {
+    list-style-type: none;
+}
 
 /*NAV*/
 .navbar {
@@ -41,8 +46,18 @@ body {
     font-size: 35pt;
     vertical-align: middle;
 }
+.dropdown-menu {
+    width: 30em;
+}
 .dropdown-menu li a {
     font-size: 20pt;
+}
+.dropdown-menu li {
+    padding-left: 3em;
+    position: relative;
+}
+.dropdown-menu li:before {
+    font-size: 2em!important;
 }
 
 
@@ -53,20 +68,57 @@ body {
 
 
 /*SHARED*/
-.room-available {
-    border-left: 20px solid #299a0b;
+li.room-available {
 }
-.room-busy {
-    border-left: 20px solid #cf0404;
+li.room-available:before {
+  content: "\e013";
+  font-family: "Glyphicons Halflings";
+  font-size: 3em;
+  color: #00ff00;
+  background-color: #299a0b;
+  position: absolute;
+  height: 100%;
+  top: 1em;
+  left: 0em;
+  margin-top: -1em;
+  width: 1.5em;
+  vertical-align: middle;
+  text-align: center;
+}
+li.room-busy {
+
+}
+li.room-busy:before {
+  content: "\e090";
+  font-family: "Glyphicons Halflings";
+  font-size: 3em;
+  color: #ff0000;
+  background-color: #cf0404;
+  position: absolute;
+  height: 100%;
+  top: 1em;
+  left: 0em;
+  margin-top: -1em;
+  width: 1.5em;
+  vertical-align: middle;
+  text-align: center;
 }
 
 
 /*DASHBOARD*/
 .dashboard-room-booking {
     display: block;
-    background-color: #181818 ;
+    background-color: #181818;
     margin-bottom: 10px;
     padding: 10px;
+}
+li.dashboard-room-booking {
+    display: block;
+    background-color: #181818;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    padding: 0.5em 0.5em 0.5em 5em;
+    position: relative;
 }
 .dashboard-booking-details {
     display: block;
@@ -91,9 +143,16 @@ body {
 }
 .room-booking {
     display: block;
-    background-color: #181818 ;
+    background-color: #181818;
     margin-bottom: 20px;
     padding: 20px;
+}
+li.room-booking {
+    display: block;
+    background-color: #181818;
+    margin-bottom: 20px;
+    padding: 0.5em 0.5em 0.5em 5em;
+    position: relative;
 }
 .booking-time {
     display: block;

@@ -19,7 +19,7 @@ class RoomDisplayBase(object):
         return dt.hour * 60 + dt.minute
 
     @abstractmethod
-    def get_room_data(self, start, end):
+    def get_room_data(self):
         """
         Get a list of dictionaries with room information in.
         For example:

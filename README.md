@@ -74,8 +74,9 @@ Backend:
 
 Frontend:
 * Make individual page better
-* Improve "For 463 minutes"
-* Click on room in dashboard goes to specific room page
+* Improve click on room in dashboard
+  * Make it work when there are no bookings
+  * Make the tick/cross clickable
 * Fix dashboard updating - Angular doesnt seem to pickup when `first_booking` is changed?
 * Add home page & move there after inactivity
 * Add currently free room suggestions

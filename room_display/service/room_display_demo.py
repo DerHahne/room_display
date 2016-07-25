@@ -44,7 +44,7 @@ class RoomDisplayDemo(RoomDisplayBase):
             }
         }
 
-    def get_room_data(self, start, end):
+    def get_room_data(self):
         return self.rooms.values()
 
     def _add_booking(
@@ -59,7 +59,9 @@ class RoomDisplayDemo(RoomDisplayBase):
             {
                 'username': 'InstaBooking',
                 'description': subject,
-                'start_minute': self.datetime_to_minute(start),
-                'end_minute': self.datetime_to_minute(end)
+                # TODO: Fix Timezone issues!
+                'start_minute': self.datetime_to_minute(start) + 60,
+                'end_minute': self.datetime_to_minute(end) + 60
             }
         )
+        self.rooms[room_id]['bookings'].sort(key=lambda booking: booking['start_minute'])

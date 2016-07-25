@@ -47,6 +47,13 @@ class RoomDisplayBase(object):
         # Work out some stuff
         start = datetime.datetime.now()
         end = start + datetime.timedelta(minutes=length)
+
+
+        # Check the room is free right now
+        if not self._is_free(room_id, start, end):
+            return {'success': False, 'message': 'The room is not free for that booking!'}
+
+        # Work out some more stuff
         subject = self.INSTABOOK_SUBJECT.format(
             length=length
         )
@@ -62,6 +69,12 @@ class RoomDisplayBase(object):
             subject,
             description
         )
+
+        return {'success': True}
+
+    @abstractmethod
+    def _is_free(self, room_id, start, end):
+        pass
 
     @abstractmethod
     def _add_booking(

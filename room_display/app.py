@@ -119,17 +119,13 @@ def instabook():
     room_id = post_data['room_id']
     length = post_data['length']
 
-    # Check the room is free right now
-    # TODO
-
     # Check the length is a valid one
     # TODO
 
     # Add a new booking
-    ROOM_DISPLAY_SERVICE.add_booking(room_id, length)
+    result = ROOM_DISPLAY_SERVICE.add_booking(room_id, length)
 
-    # Return something useful
-    return jsonify({'success': True})
+    return jsonify(result)
 
 
 ##################################################

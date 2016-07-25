@@ -43,6 +43,10 @@ class RoomDisplayDemo(RoomDisplayBase):
     def get_room_data(self):
         return self.rooms.values()
 
+    def _is_free(self, room_id, start, end):
+        # TODO: Work this out!
+        return True
+
     def _add_booking(
             self,
             room_id,

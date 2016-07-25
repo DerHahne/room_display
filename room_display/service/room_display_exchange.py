@@ -97,6 +97,10 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             'end_minute': self.datetime_to_minute(booking['end']),
         }
 
+    def _is_free(self, room_id, start, end):
+        # TODO: Work this out!
+        return True
+
     def _add_booking(
             self,
             room_id,

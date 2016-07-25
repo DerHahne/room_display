@@ -40,9 +40,9 @@ roomDisplayModule.config(function($provide) {
             if (remaining_minutes <= 10) {
                 ret += 'a few minutes'
             } else if (remaining_minutes <= 20) {
-                ret += ret != '' ? 'a quarter' : 'a quarter of an hour'
+                ret += ret != 'around ' ? 'a quarter' : 'a quarter of an hour'
             } else if (remaining_minutes <= 40) {
-                ret += ret != '' ? 'a half' : 'half an hour'
+                ret += ret != 'around ' ? 'a half' : 'half an hour'
             } else if (remaining_minutes <= 50) {
                 ret += '45 minutes'
             } else {

@@ -91,14 +91,11 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         return self._rooms
 
     def _transform_booking_info(self, booking):
-        start = booking.pop('start')
-        end = booking.pop('end')
-        booking.pop('description')
-
-        booking['start_minute'] = self.datetime_to_minute(start)
-        booking['end_minute'] = self.datetime_to_minute(end)
-
-        return booking
+        return {
+            'username': booking['username'],
+            'start_minute': self.datetime_to_minute(booking['start']),
+            'end_minute': self.datetime_to_minute(booking['end']),
+        }
 
     def _add_booking(
             self,

@@ -11,19 +11,16 @@ class RoomDisplayDemo(RoomDisplayBase):
                 'bookings': [
                     {
                         'username': 'Alice',
-                        'description': 'Innovation day brainstorm',
-                        'start_minute': 540,
+                        'start_minute': 9*60,
                         'end_minute': 570
                     },
                     {
                         'username': 'Bob',
-                        'description': 'Lunch',
                         'start_minute': 840,
                         'end_minute': 900
                     },
                     {
                         'username': 'Alice',
-                        'description': '<Private>',
                         'start_minute': 1020,
                         'end_minute': 1080
                     }
@@ -36,7 +33,6 @@ class RoomDisplayDemo(RoomDisplayBase):
                 'bookings': [
                     {
                         'username': 'Eve',
-                        'description': 'Innovation day brainstorm',
                         'start_minute': 540,
                         'end_minute': 1020
                     }

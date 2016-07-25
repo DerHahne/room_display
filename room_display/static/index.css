@@ -161,3 +161,23 @@ li.room-booking {
 .booking-details {
     display: block;
 }
+.booking-first {
+    zoom: 2.5;
+}
+
+
+/*INSTABOOK*/
+.instabook {
+    padding: 10px;
+}
+.instabook_button {
+    margin-right: 10px;
+    padding: 0px 25px;
+    line-height: normal;
+}
+.instabook_text {
+    font-size:12px;
+}
+.instabook_time {
+    font-size:36px;
+}

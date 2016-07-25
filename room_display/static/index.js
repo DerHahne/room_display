@@ -8,6 +8,8 @@ roomDisplayModule.config(function($provide) {
         roomDataInstance.roomData = {};
         // Make it available as a list for the UI
         roomDataInstance.rooms = [];
+        // Fuck Angular binding
+        roomDataInstance.instabookTimes = [];
 
 
         /*
@@ -84,7 +86,7 @@ roomDisplayModule.config(function($provide) {
         roomDataInstance.updateNow = function() {
             console.log('Fetching room data...');
             $http
-                .get('/data_FUCK')
+                .get('/data')
                 .then(function(response) {
                     console.log('Parsing room data...');
                     // Parse & store the new information
@@ -100,6 +102,7 @@ roomDisplayModule.config(function($provide) {
             roomDataInstance._updatePoll(data.polling);
             roomDataInstance._updateRooms(data.rooms);
             roomDataInstance._updateRoomList();
+            roomDataInstance._updateInstabookTimes(data.instabook_times);
         };
 
         roomDataInstance._updatePoll = function(data) {
@@ -190,6 +193,17 @@ roomDisplayModule.config(function($provide) {
             });
         };
 
+        roomDataInstance._updateInstabookTimes = function(instabookTimes) {
+            if (roomDataInstance.instabookTimes.length !== 0) {
+                // This is already setup; assume it won't change
+                return;
+            }
+
+            instabookTimes.forEach(function(time) {
+                roomDataInstance.instabookTimes.push(time);
+            });
+        };
+
 
         /*
             Polling functions
@@ -262,6 +276,36 @@ roomDisplayModule.config(function($provide) {
             angular.copy(future_bookings, room.bookings);
         };
 
+
+        /*
+            Instabook functions
+        */
+        roomDataInstance.addBooking = function(room_id, length) {
+            console.log('Adding booking...', room_id, length);
+            $http({
+                    url: '/instabook',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        'room_id': room_id,
+                        'length': length
+                    })
+                })
+                .then(function(response) {
+                    console.log(response);
+                    // console.log('Parsing room data...');
+                    // // Parse & store the new information
+                    // roomDataInstance.parseData(response.data);
+
+                    // // Update the changing information
+                    // roomDataInstance._updateRoomBookingsNow();
+                });
+            // TODO: Error handling
+
+        };
+
         return roomDataInstance;
     });
 });
@@ -270,8 +314,10 @@ roomDisplayModule.config(function($provide) {
 roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope) {
     var roomDisplay = this;
 
-    // Make the list of rooms available to the template
+    // Make stuff available to templates
     $scope.rooms = $roomData.rooms;
+    $scope.instabookTimes = $roomData.instabookTimes;
+    $scope.addBooking = $roomData.addBooking;
 
     $scope.clickRoom = function(room) {
         $scope.selected_room = room;

@@ -1,33 +1,31 @@
-<li class="room-booking {{booking.available ? 'room-available' : 'room-busy'}}">
-    <span class="booking-time">
-        <span class="booking-start_time">
-            {{booking.start_time}}
-        </span>
-        -
-        <span class="booking-end_time">
-            {{booking.end_time}}
-        </span>
+<span class="booking-time">
+    <span class="booking-start_time">
+        {{booking.start_time}}
+    </span>
+    -
+    <span class="booking-end_time">
+        {{booking.end_time}}
+    </span>
+</span>
+
+<h2 class="booking-heading">
+    <span ng-if="booking.available">
+        Available
+    </span>
+    <span ng-if="!booking.available">
+        Booked
+    </span>
+</h2>
+
+<span class="booking-details">
+    <span ng-if="booking.starts_in_minutes <= 0">
+        For {{booking.ends_in_minutes_fuzzy}}
+    </span>
+    <span ng-if="booking.starts_in_minutes > 0">
+        In {{booking.starts_in_minutes_fuzzy}}
     </span>
 
-    <h2 class="booking-heading">
-        <span ng-if="booking.available">
-            Available
-        </span>
-        <span ng-if="!booking.available">
-            Booked
-        </span>
-    </h2>
-
-    <span class="booking-details">
-        <span ng-if="booking.starts_in_minutes <= 0">
-            For {{booking.ends_in_minutes_fuzzy}}
-        </span>
-        <span ng-if="booking.starts_in_minutes > 0">
-            In {{booking.starts_in_minutes_fuzzy}}
-        </span>
-
-        <span ng-if="booking.username" class="booking-username">
-            (By {{booking.username}})
-        </span>
+    <span ng-if="booking.username" class="booking-username">
+        (By {{booking.username}})
     </span>
-</li>
+</span>

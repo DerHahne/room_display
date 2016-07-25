@@ -94,7 +94,7 @@ def index():
     return flask.send_file('./templates/index.html')
 
 
-@app.route('/data_FUCK')
+@app.route('/data')
 def data():
     # Get booking info from the room display service
     start = datetime.today().replace(hour=0, minute=0, second=0)
@@ -105,8 +105,8 @@ def data():
             'interval': config['poll_interval'],
             'start_minute': config['poll_start_minute'],
             'end_minute': config['poll_end_minute'],
-            'instabook_times': config['instabook_times'],
         },
+        'instabook_times': config['instabook_times'],
         'rooms': ROOM_DISPLAY_SERVICE.get_room_data(start, end)
     }
     return jsonify(data)
@@ -115,8 +115,9 @@ def data():
 @app.route('/instabook', methods=['POST'])
 def instabook():
     # Extract POST data
-    room_id = request.form['room_id']
-    length = int(request.form['length'])
+    post_data = request.get_json()
+    room_id = post_data['room_id']
+    length = post_data['length']
 
     # Check the room is free right now
     # TODO

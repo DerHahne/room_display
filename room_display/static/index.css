@@ -9,14 +9,17 @@ ul {
 li {
     list-style-type: none;
 }
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 /*NAV*/
 .navbar {
     background: #1c1e22;
 }
-.navbar-nav {
-    margin-top: 15px;
-}
+
 .navbar-default .navbar-nav>.active>a {
     background: none;
 }
@@ -40,12 +43,6 @@ li {
     margin-right: 5px;
 }
 
-
-/*DROPDOWN*/
-#page_name {
-    font-size: 35pt;
-    vertical-align: middle;
-}
 .dropdown-menu {
     width: 30em;
 }

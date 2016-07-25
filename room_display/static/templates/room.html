@@ -2,7 +2,7 @@
     <li ng-repeat="booking in room.bookings" class="room-booking {{booking.available ? 'room-available' : 'room-busy'}}">
         <span ng-if="$index == 0" class="booking-first">
             <span ng-include src="'static/templates/booking.html'"></span>
-            <!--<span ng-include src="'static/templates/instabook.html'"></span>-->
+            <span ng-include src="'static/templates/instabook.html'" ng-if="instabookTimes"></span>
         </span>
         <span ng-if="$index != 0">
             <span ng-include src="'static/templates/booking.html'"></span>

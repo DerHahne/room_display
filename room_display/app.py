@@ -40,7 +40,8 @@ config = {
     'allowed_ips': [
         ip.strip()
         for ip in _allowed_ips.split(',')
-    ] if _allowed_ips else [],
+        if ip
+    ] if _allowed_ips is not None else [],
 
     # Frontend settings
     'poll_interval': os.environ.get('POLL_INTERVAL', 1),
@@ -51,7 +52,8 @@ config = {
     'instabook_times': [
         int(ib_time.strip())
         for ib_time in _instabook_times.split(',')
-    ] if _instabook_times else [15, 30],
+        if ib_time
+    ] if _instabook_times is not None else [15, 30],
 }
 
 DEMO_MODE = False

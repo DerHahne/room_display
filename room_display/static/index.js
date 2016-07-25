@@ -294,17 +294,10 @@ roomDisplayModule.config(function($provide) {
                     })
                 })
                 .then(function(response) {
-                    console.log(response);
-                    //TODO: Update list of bookings
-                    // console.log('Parsing room data...');
-                    // // Parse & store the new information
-                    // roomDataInstance.parseData(response.data);
-
-                    // // Update the changing information
-                    // roomDataInstance._updateRoomBookingsNow();
+                    // Update list of bookings
+                    roomDataInstance.updateNow();
                 });
             // TODO: Error handling
-
         };
 
         return roomDataInstance;

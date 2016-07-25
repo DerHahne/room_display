@@ -35,14 +35,14 @@ python room_display/app.py runserver
 
 ## Settings
 
-The following environment variables can be set:
+The following environment variables can be set (all are optional):
 * Server settings:
   * `IP`: The IP to bind the web server to (defaults to `0.0.0.0`)
   * `PORT`: The port to bind the web server to (defaults to `5000`)
-
-* Misc settings (all optional):
+* Misc settings:
   * `DEMO_MODE`: If this is set to `"true"`, the server will operate in a demonstration mode (using example data)
-* Exchange settings (all optional):
+  * `INSTABOOK_TIMES`: A comma separated list of meeting lengths allowed by Insta-booking
+* Exchange settings:
   * `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
     * If this is left blank, demo mode will be enabled
   * `OUTLOOK_EWS_URL`: URL to the EWS endpoint on the exchange server e.g. [https://<your exchange server>/EWS/Exchange.asmx]
@@ -52,11 +52,11 @@ The following environment variables can be set:
   * `OUTLOOK_ROOM_SEARCH_TERM` (See below): A string fragment to match to find contacts that are meeting rooms from the exchange global address list
   * `OUTLOOK_REFRESH_TIME`: How often to grab the data from Exchange
 * Security settings:
-  * `ALLOWED_IPS` (Optional): A comma separated listed of allowed IPs. Default is allowed by any IP.
+  * `ALLOWED_IPS`: A comma separated listed of allowed IPs. Default is allowed by any IP.
 * Frontend settings:
-  * `POLL_INTERVAL` (Optional): Poll wait time for the client in minutes. Defaults to 1.
-  * `POLL_START_MINUTE` (Optional): Poll start time in minutes from midnight. Defaults to 420 (7am)
-  * `POLL_END_MINUTE` (Optional): Poll end time in minutes from midnight. Defaults to 1140 (7pm).
+  * `POLL_INTERVAL`: Poll wait time for the client in minutes. Defaults to 1.
+  * `POLL_START_MINUTE`: Poll start time in minutes from midnight. Defaults to 420 (7am)
+  * `POLL_END_MINUTE`: Poll end time in minutes from midnight. Defaults to 1140 (7pm).
 
 Either the list of meeting rooms must be supplied as a json.dumps string:
 ```python

@@ -18,10 +18,10 @@
 
                 <span class="dashboard-booking-duration">
                     <span ng-if="room.first_booking.starts_in_minutes <= 0">
-                        For {{room.first_booking.ends_in_minutes}} minutes
+                        For {{room.first_booking.ends_in_minutes_fuzzy}}
                     </span>
                     <span ng-if="room.first_booking.starts_in_minutes > 0">
-                        In {{room.first_booking.starts_in_minutes}} minutes
+                        In {{room.first_booking.starts_in_minutes_fuzzy}}
                     </span>
                     ({{room.first_booking.start_time}} - {{room.first_booking.end_time}})
                 </span>

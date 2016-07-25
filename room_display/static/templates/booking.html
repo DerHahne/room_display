@@ -20,10 +20,10 @@
 
     <span class="booking-details">
         <span ng-if="booking.starts_in_minutes <= 0">
-            For {{booking.ends_in_minutes}} minutes
+            For {{booking.ends_in_minutes_fuzzy}}
         </span>
         <span ng-if="booking.starts_in_minutes > 0">
-            In {{booking.starts_in_minutes}} minutes
+            In {{booking.starts_in_minutes_fuzzy}}
         </span>
 
         <span ng-if="booking.username" class="booking-username">

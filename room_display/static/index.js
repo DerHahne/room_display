@@ -295,6 +295,7 @@ roomDisplayModule.config(function($provide) {
                 })
                 .then(function(response) {
                     console.log(response);
+                    //TODO: Update list of bookings
                     // console.log('Parsing room data...');
                     // // Parse & store the new information
                     // roomDataInstance.parseData(response.data);

@@ -18,8 +18,6 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         room_search_term,
         refresh_time_seconds
     ):
-        self.id_namespace = ".".join(reversed(ews_url.split('//', 1)[1].split('/')[0].split('.')))
-
         self.exchange = ExchangeCalendar(
             domain,
             ews_url,
@@ -77,7 +75,7 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
 
         for room_name, room_email in self.rooms.iteritems():
             meeting_room_details = {
-                "id": "{}.{}".format(self.id_namespace, room_email.split('@')[0]),
+                "id": room_email,
                 "name": room_name,
                 "description": None,
                 "bookings": [

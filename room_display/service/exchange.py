@@ -104,7 +104,7 @@ class ExchangeCalendar(object):
         # TODO: Use a nicer location than the rooms email address
 
         # Create the event
-        event = service.calendar.new_event(
+        event = self.calendar.new_event(
             attendees=[room_id],
             location=room_id,
             start=timezone(self.TIMEZONE).localize(start),

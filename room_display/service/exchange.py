@@ -122,13 +122,18 @@ class ExchangeCalendar(object):
 
         # Create the event
         event = self.calendar.new_event(
-            resources=[room_email],
+            # required_attendees=[room_email],
+            # resources=[room_email],
             location=room_email,
             start=self.timezone.localize(start),
             end=self.timezone.localize(end),
             subject=subject,
             html_body=description
         )
+
+        # Maybe setting this out here will work?
+        event.add_attendees([room_email], required=True)
+        event.add_resources([room_email])
 
         # Connect to Exchange and create the event
         event.create()

@@ -41,7 +41,7 @@ The following environment variables can be set:
   * `PORT`: The port to bind the web server to (defaults to `5000`)
 
 * Misc settings (all optional):
-  * `DEMO_MODE`: If this is set (to anything), the server will operate in a demonstration mode (using example data)
+  * `DEMO_MODE`: If this is set to `"true"`, the server will operate in a demonstration mode (using example data)
 * Exchange settings (all optional):
   * `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
     * If this is left blank, demo mode will be enabled

@@ -47,8 +47,14 @@ config = {
     'poll_end_minute': os.environ.get('OUTLOOK_POLL_END_MINUTE', 1140),
 }
 
+DEMO_MODE = False
+if config['demo_mode'] and config['demo_mode'].lower() == 'true':
+    DEMO_MODE = True
+if not config['domain']:
+    DEMO_MODE = True
+
 ROOM_DISPLAY_SERVICE = None
-if config['demo_mode'] is None and config['domain']:
+if not DEMO_MODE:
     ROOM_DISPLAY_SERVICE = RoomDisplay(
         config['domain'],
         config['ews_url'],

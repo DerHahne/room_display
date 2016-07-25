@@ -53,30 +53,6 @@ roomDisplayModule.config(function($provide) {
 
 
         /*
-            Polling functions
-        */
-        roomDataInstance._poll = {
-            enabled: false,
-            last_poll_minutes: 0,
-            // Until the first server poll, assume polling minutely from midnight to midnight
-            interval: 1,
-            start_minute: 0,
-            end_minute: 1440
-        };
-        roomDataInstance.enablePolling = function() {
-            roomDataInstance._poll.enabled = true;
-        };
-        roomDataInstance.disablePolling = function() {
-            roomDataInstance._poll.enabled = false;
-        };
-        $interval(function() {
-            if (roomDataInstance._poll.enabled) {
-                roomDataInstance.update();
-            }
-        }, 1000);
-
-
-        /*
             Data update functions
         */
         roomDataInstance.update = function() {
@@ -213,6 +189,32 @@ roomDisplayModule.config(function($provide) {
                 return r1.name > r2.name;
             });
         };
+
+
+        /*
+            Polling functions
+        */
+        roomDataInstance._poll = {
+            enabled: false,
+            last_poll_minutes: 0,
+            // Until the first server poll, assume polling minutely from midnight to midnight
+            interval: 1,
+            start_minute: 0,
+            end_minute: 1440
+        };
+        roomDataInstance.enablePolling = function() {
+            roomDataInstance._poll.enabled = true;
+        };
+        roomDataInstance.disablePolling = function() {
+            roomDataInstance._poll.enabled = false;
+        };
+        $interval(function() {
+            if (roomDataInstance._poll.enabled) {
+                roomDataInstance.update();
+            }
+        }, 10000);
+        // Update as soon as we start
+        roomDataInstance.update();
 
 
         /*

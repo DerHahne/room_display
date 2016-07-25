@@ -48,9 +48,13 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         self.start()
 
     def run(self):
+        logging.warning(datetime.now().isoformat() + ' Data thread: Starting...')
         while (True):
+            logging.warning(datetime.now().isoformat() + ' Data thread: Fetching...')
             self._update_room_data()
+            logging.warning(datetime.now().isoformat() + ' Data thread: Waiting...')
             time.sleep(self.refresh_time_seconds)
+        logging.warning(datetime.now().isoformat() + ' Data thread: Done!')
 
     def _check_room(self, room_email):
         start = datetime.today().replace(hour=0, minute=0, second=0)

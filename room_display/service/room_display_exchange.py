@@ -83,3 +83,19 @@ class RoomDisplayExchange(RoomDisplayBase):
         booking['end_minute'] = end.hour * 60 + end.minute
 
         return booking
+
+    def _add_booking(
+            self,
+            room_id,
+            start,
+            end,
+            subject,
+            description
+        ):
+        self.exchange.add_booking(
+            room_id,
+            start,
+            end,
+            subject,
+            description
+        )

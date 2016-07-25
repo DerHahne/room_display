@@ -43,16 +43,7 @@ Exchange2010Service._check_for_exchange_fault = non_borked_check_for_exchange_fa
 
 
 class ExchangeCalendar(object):
-
     TIMEZONE = "GMT"
-    INSTABOOK_SUBJECT = u"Insta-Booking ({length})"
-    INSTABOOK_BODY = u"""
-    <html>
-        <body>
-            <h1>{subject}</h1>
-            <p>This is an Insta-Booking by <a href="https://github.com/csudcy/room_display">Room Display</a></p>
-        </body>
-    </html>"""
 
     def __init__(self, domain, url, username, password):
         super(ExchangeCalendar, self).__init__()
@@ -101,3 +92,26 @@ class ExchangeCalendar(object):
 
     def get_contacts(self, search):
         return self._service.contacts().search_contacts(search).contacts
+
+    def add_booking(
+            self,
+            room_id,
+            start,
+            end,
+            subject,
+            description
+        ):
+        # TODO: Use a nicer location than the rooms email address
+
+        # Create the event
+        event = service.calendar.new_event(
+            attendees=[room_id],
+            location=room_id,
+            start=timezone(self.TIMEZONE).localize(start),
+            end=timezone(self.TIMEZONE).localize(end),
+            subject=subject,
+            html_body=description
+        )
+
+        # Connect to Exchange and create the event
+        event.create()

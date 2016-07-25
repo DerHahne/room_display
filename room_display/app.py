@@ -111,6 +111,25 @@ def data():
     return jsonify(data)
 
 
+@app.route('/instabook', methods=['POST'])
+def instabook():
+    # Extract POST data
+    room_id = request.form['room_id']
+    length = int(request.form['length'])
+
+    # Check the room is free right now
+    # TODO
+
+    # Check the length is a valid one
+    # TODO
+
+    # Add a new booking
+    ROOM_DISPLAY_SERVICE.add_booking(room_id, length)
+
+    # Return something useful
+    return jsonify({'success': True})
+
+
 ##################################################
 #                    Main
 ##################################################

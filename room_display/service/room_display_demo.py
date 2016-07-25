@@ -46,3 +46,13 @@ class RoomDisplayDemo(RoomDisplayBase):
 
     def get_room_data(self, start, end):
         return self.rooms.values()
+
+    def _add_booking(
+            self,
+            room_id,
+            start,
+            end,
+            subject,
+            description
+        ):
+        pass

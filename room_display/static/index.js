@@ -273,6 +273,10 @@ roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope
     // Make the list of rooms available to the template
     $scope.rooms = $roomData.rooms;
 
+    $scope.clickRoom = function(room) {
+        $scope.selected_room = room;
+    }
+
     $roomData.enablePolling();
 });
 
@@ -288,12 +292,6 @@ roomDisplayModule.controller('TimeController', function($scope, $interval) {
 });
 
 
-function update_page_name() {
-    console.log('update_page_name...');
-    var page_name = $('#page_changer li.active').text();
-    $('#page_name').text(page_name);
-}
-
 angular.element(document).ready(function() {
     // HACK: Need to wait for the navbar to be rendered before binding events to it
     setTimeout(init, 1000);
@@ -306,10 +304,4 @@ function init() {
         req.call(document.body.parentNode);
     });
 
-    // Update the page name when the dropdown changes
-    $('#page_changer').on('hidden.bs.dropdown', update_page_name);
-    $('.dashboard-room-booking').on('click', update_page_name);
-
-    //Show the current page name
-    update_page_name();
 }

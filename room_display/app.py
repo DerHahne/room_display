@@ -42,6 +42,7 @@ config = {
     'room_dict': os.environ.get('OUTLOOK_ROOM_DICT', None),
     'room_search_term': os.environ.get('OUTLOOK_ROOM_SEARCH_TERM', None),
     'refresh_time_seconds': os.environ.get('OUTLOOK_REFRESH_TIME', 60),
+    'timezone_name': os.environ.get('OUTLOOK_TIMEZONE_NAME', 'Europe/London'),
 
     # Security settings
     'allowed_ips': [
@@ -85,6 +86,7 @@ else:
         config['room_dict'],
         config['room_search_term'],
         config['refresh_time_seconds'],
+        config['timezone_name'],
     )
 
 

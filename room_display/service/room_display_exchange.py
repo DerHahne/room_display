@@ -3,6 +3,8 @@ from threading import Thread
 import logging
 import time
 
+from pytz import timezone
+
 from service.exchange import ExchangeCalendar
 from service.room_display_base import RoomDisplayBase
 
@@ -18,13 +20,16 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         password,
         room_dict,
         room_search_term,
-        refresh_time_seconds
+        refresh_time_seconds,
+        timezone_name,
     ):
+        self.timezone = timezone(timezone_name)
         self.exchange = ExchangeCalendar(
             domain,
             ews_url,
             username,
-            password
+            password,
+            self.timezone
         )
 
         if room_dict:
@@ -56,9 +61,15 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             time.sleep(self.refresh_time_seconds)
         logger.debug('Data thread: Done!')
 
+    def _get_day_boundaries(self):
+        # Yay, timezones!
+        now = timezone('UTC').localize(datetime.now()).astimezone(self.timezone)
+        start = now.replace(hour=0, minute=0, second=0)
+        end = now.replace(hour=23, minute=59, second=59)
+        return start, end
+
     def _check_room(self, room_email):
-        start = datetime.today().replace(hour=0, minute=0, second=0)
-        end = datetime.today().replace(hour=23, minute=59, second=59)
+        start, end = self._get_day_boundaries()
 
         try:
             # Fetch the room bookings
@@ -68,8 +79,7 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         return True
 
     def _update_room_data(self):
-        start = datetime.today().replace(hour=0, minute=0, second=0)
-        end = datetime.today().replace(hour=23, minute=59, second=59)
+        start, end = self._get_day_boundaries()
 
         rooms = []
 

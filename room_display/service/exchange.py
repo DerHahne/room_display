@@ -6,7 +6,6 @@ from pyexchange.exceptions import (FailedExchangeException, ExchangeStaleChangeK
                                    ExchangeInternalServerTransientErrorException)
 from pyexchange.exchange2010 import Exchange2010CalendarEvent
 from pyexchange.exchange2010 import soap_request
-from pytz import timezone
 
 logger = logging.getLogger(__name__)
 
@@ -46,10 +45,10 @@ Exchange2010Service._check_for_exchange_fault = non_borked_check_for_exchange_fa
 
 
 class ExchangeCalendar(object):
-    TIMEZONE = timezone("Europe/London")
-
-    def __init__(self, domain, url, username, password):
+    def __init__(self, domain, url, username, password, timezone):
         super(ExchangeCalendar, self).__init__()
+
+        self.timezone = timezone
 
         connection = ExchangeNTLMAuthConnection(
             url=url,
@@ -60,9 +59,6 @@ class ExchangeCalendar(object):
         self.calendar = self._service.calendar()
 
     def get_bookings(self, start, end, email_address):
-        start = self.TIMEZONE.localize(start)
-        end = self.TIMEZONE.localize(end)
-
         logger.debug(
             'Getting bookings for {email_address} from {start} to {end}...'.format(
                 start=start.isoformat(),
@@ -107,8 +103,8 @@ class ExchangeCalendar(object):
             'email_address': event.organizer.email,
             'subject': event.subject.strip(),
             'description': event.text_body,
-            'start': event.start.astimezone(self.TIMEZONE),
-            'end': event.end.astimezone(self.TIMEZONE),
+            'start': event.start.astimezone(self.timezone),
+            'end': event.end.astimezone(self.timezone),
         }
 
     def get_contacts(self, search):
@@ -128,8 +124,8 @@ class ExchangeCalendar(object):
         event = self.calendar.new_event(
             resources=[room_email],
             location=room_email,
-            start=self.TIMEZONE.localize(start),
-            end=self.TIMEZONE.localize(end),
+            start=self.timezone.localize(start),
+            end=self.timezone.localize(end),
             subject=subject,
             html_body=description
         )

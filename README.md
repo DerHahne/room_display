@@ -51,6 +51,7 @@ The following environment variables can be set (all are optional):
   * `OUTLOOK_ROOM_DICT` (See below): A JSON dump of a dict containing the room name as a key and the room's email address as a value
   * `OUTLOOK_ROOM_SEARCH_TERM` (See below): A string fragment to match to find contacts that are meeting rooms from the exchange global address list
   * `OUTLOOK_REFRESH_TIME`: How often to grab the data from Exchange
+  * `OUTLOOK_TIMEZONE_NAME`: What timezone the Exchange server is in e.g. `Europe/London`
 * Security settings:
   * `ALLOWED_IPS`: A comma separated listed of allowed IPs. Default is allowed by any IP.
 * Frontend settings:

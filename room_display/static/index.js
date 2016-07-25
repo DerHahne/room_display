@@ -24,6 +24,33 @@ roomDisplayModule.config(function($provide) {
             return h + ':' + (m < 10 ? '0' : '') + m;
         };
 
+        roomDataInstance.toFuzzyTime = function(minutes) {
+            var hours = Math.floor(minutes / 60),
+                remaining_minutes = minutes - (60 * hours);
+
+            var ret = 'around '
+            if (hours == 1) {
+                ret += 'an hour and '
+            } else if (hours >= 2) {
+                hours = remaining_minutes >= 30 ? hours + 1 : hours
+                ret += hours + ' hours'
+                return ret
+            }
+
+            if (remaining_minutes <= 10) {
+                ret += 'a few minutes'
+            } else if (remaining_minutes <= 20) {
+                ret += ret != '' ? 'a quarter' : 'a quarter of an hour'
+            } else if (remaining_minutes <= 40) {
+                ret += ret != '' ? 'a half' : 'half an hour'
+            } else if (remaining_minutes <= 50) {
+                ret += '45 minutes'
+            } else {
+                ret = ret ? '2 hours' : 'an hour'
+            }
+            return ret
+        }
+
 
         /*
             Polling functions
@@ -214,6 +241,8 @@ roomDisplayModule.config(function($provide) {
                 room._all_bookings.forEach(function(booking) {
                     booking.starts_in_minutes = booking.start_minute - current_minutes;
                     booking.ends_in_minutes = booking.end_minute - current_minutes;
+                    booking.starts_in_minutes_fuzzy = roomDataInstance.toFuzzyTime(booking.starts_in_minutes);
+                    booking.ends_in_minutes_fuzzy = roomDataInstance.toFuzzyTime(booking.ends_in_minutes);
                 });
 
                 // Update bookings to be future bookings from _all_bookings
@@ -277,6 +306,7 @@ function init() {
 
     // Update the page name when the dropdown changes
     $('#page_changer').on('hidden.bs.dropdown', update_page_name);
+    $('.dashboard-room-booking').on('click', update_page_name);
 
     //Show the current page name
     update_page_name();

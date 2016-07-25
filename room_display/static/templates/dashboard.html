@@ -1,7 +1,6 @@
-<span class="dashboard-room" ng-repeat="room in rooms">
-    <span ng-if="room.first_booking">
-        <span class="dashboard-room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
-
+<ul class="dashboard-room" ng-repeat="room in rooms">
+    <li ng-if="room.first_booking" class="dashboard-room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
+        <span>
             <span class="dashboard-room-name">
                 {{room.name}}
             </span>
@@ -18,10 +17,10 @@
 
                 <span class="dashboard-booking-duration">
                     <span ng-if="room.first_booking.starts_in_minutes <= 0">
-                        For {{room.first_booking.ends_in_minutes}} minutes
+                        For {{room.first_booking.ends_in_minutes_fuzzy}}
                     </span>
                     <span ng-if="room.first_booking.starts_in_minutes > 0">
-                        In {{room.first_booking.starts_in_minutes}} minutes
+                        In {{room.first_booking.starts_in_minutes_fuzzy}}
                     </span>
                     ({{room.first_booking.start_time}} - {{room.first_booking.end_time}})
                 </span>
@@ -31,9 +30,8 @@
                 </span>
 
             </span>
-
         </span>
-    </span>
+    </li>
     <span ng-if="!room.first_booking">
         <h1 class="dashboard-room-name">
             {{room.name}}
@@ -41,4 +39,4 @@
 
         No more bookings!
     </span>
-</span>
+</ul>

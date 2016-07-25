@@ -14,6 +14,10 @@ class RoomDisplayBase(object):
         </body>
     </html>"""
 
+    @staticmethod
+    def datetime_to_minute(dt):
+        return dt.hour * 60 + dt.minute
+
     @abstractmethod
     def get_room_data(self, start, end):
         """

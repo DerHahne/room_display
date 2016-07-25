@@ -55,4 +55,11 @@ class RoomDisplayDemo(RoomDisplayBase):
             subject,
             description
         ):
-        pass
+        self.rooms[room_id]['bookings'].append(
+            {
+                'username': 'InstaBooking',
+                'description': subject,
+                'start_minute': self.datetime_to_minute(start),
+                'end_minute': self.datetime_to_minute(end)
+            }
+        )

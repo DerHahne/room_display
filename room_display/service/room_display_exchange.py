@@ -58,6 +58,7 @@ class RoomDisplayExchange(RoomDisplayBase):
         return True
 
     def get_room_data(self, start, end):
+        print('Fetching data from Exchange...')
         rooms = []
 
         for room_name, room_email in self.rooms.iteritems():
@@ -79,8 +80,8 @@ class RoomDisplayExchange(RoomDisplayBase):
         end = booking.pop('end')
         booking.pop('description')
 
-        booking['start_minute'] = start.hour * 60 + start.minute
-        booking['end_minute'] = end.hour * 60 + end.minute
+        booking['start_minute'] = self.datetime_to_minute(start)
+        booking['end_minute'] = self.datetime_to_minute(end)
 
         return booking
 
@@ -92,6 +93,7 @@ class RoomDisplayExchange(RoomDisplayBase):
             subject,
             description
         ):
+        # Add the booking
         self.exchange.add_booking(
             room_id,
             start,
@@ -99,3 +101,6 @@ class RoomDisplayExchange(RoomDisplayBase):
             subject,
             description
         )
+
+        # Invalidate the cache so the next data call will include the new booking
+        self.get_room_data.delete()

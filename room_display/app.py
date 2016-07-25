@@ -100,6 +100,7 @@ def data():
     start = datetime.today().replace(hour=0, minute=0, second=0)
     end = datetime.today().replace(hour=23, minute=59, second=59)
     data = {
+        'now': datetime.now().isoformat(),
         'polling': {
             'interval': config['poll_interval'],
             'start_minute': config['poll_start_minute'],

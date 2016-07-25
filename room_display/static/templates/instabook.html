@@ -1,0 +1,9 @@
+<div class="instabook">
+    <span ng-repeat="ib_time in instabookTimes">
+        <button type="button" class="btn btn-default instabook_button" ng-click="addBooking(room.id, ib_time)">
+            <div class="instabook_text">Book for</div>
+            <div class="instabook_time">{{ib_time}}</div>
+            <div class="instabook_text">minutes</div>
+        </button>
+    </span>
+</div>

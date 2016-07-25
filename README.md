@@ -25,7 +25,7 @@ Once the image has finished building & everything is running, you should be able
 
 ### Cloud9
 
-To run on [Cloud9](https://c9.io/) (and possibly Debian based Linux in general): 
+To run on [Cloud9](https://c9.io/) (and possibly Debian based Linux in general):
 ```bash
 sudo apt-get install python-lxml
 sudo pip install -r requirements.txt
@@ -39,9 +39,12 @@ The following environment variables can be set:
 * Server settings:
   * `IP`: The IP to bind the web server to (defaults to `0.0.0.0`)
   * `PORT`: The port to bind the web server to (defaults to `5000`)
+
+* Misc settings (all optional):
+  * `DEMO_MODE`: If this is set (to anything), the server will operate in a demonstration mode (using example data)
 * Exchange settings (all optional):
   * `OUTLOOK_DOMAIN`: Domain for the outlook user to log onto
-    * If this is left blank, the server will operate in a demonstration mode (using example data)
+    * If this is left blank, demo mode will be enabled
   * `OUTLOOK_EWS_URL`: URL to the EWS endpoint on the exchange server e.g. [https://<your exchange server>/EWS/Exchange.asmx]
   * `OUTLOOK_USERNAME`: User for exchange
   * `OUTLOOK_PASSWORD`: Password for exchange

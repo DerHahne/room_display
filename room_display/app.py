@@ -23,6 +23,9 @@ heroku = Heroku(app)
 _allowed_ips = os.environ.get('OUTLOOK_ALLOWED_IPS', '')
 
 config = {
+    # Misc settings
+    'demo_mode': os.environ.get('DEMO_MODE', None),
+
     # Exchange settings
     'domain': os.environ.get('OUTLOOK_DOMAIN', None),
     'ews_url': os.environ.get('OUTLOOK_EWS_URL', None),  # EWS = Exchange Web Services
@@ -45,7 +48,7 @@ config = {
 }
 
 ROOM_DISPLAY_SERVICE = None
-if config['domain']:
+if config['demo_mode'] is None and config['domain']:
     ROOM_DISPLAY_SERVICE = RoomDisplay(
         config['domain'],
         config['ews_url'],
@@ -123,7 +126,7 @@ def production():
     """
     # Turn off debug on live...
     app.debug = False
-    
+
     runserver()
 
 

@@ -58,13 +58,10 @@ a:hover {
 }
 
 
-/*TABS*/
-.tab-pane {
+/*SHARED*/
+.jumbotron {
     margin-top: 60px;
 }
-
-
-/*SHARED*/
 li.room-available {
 }
 li.room-available:before {

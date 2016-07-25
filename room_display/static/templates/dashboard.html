@@ -1,4 +1,4 @@
-<ul class="dashboard-room" ng-repeat="room in rooms" ng-if="!selected_room">
+<ul class="dashboard-room" ng-repeat="room in rooms">
     <li ng-if="room.first_booking" class="dashboard-room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
         <a ng-click="clickRoom(room)">
             <span>
@@ -41,7 +41,4 @@
 
         No more bookings!
     </span>
-</ul>
-<ul ng-if="selected_room" ng-repeat="booking in selected_room.bookings">
-    <span ng-include src="'static/templates/booking.html'"></span>
 </ul>

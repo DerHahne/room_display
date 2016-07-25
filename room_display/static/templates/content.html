@@ -2,13 +2,13 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <span ng-include src="'static/templates/navbar.html'"></span>
     </nav>
-    <div class="jumbotron tab-content">
-        <div class="tab-pane active" id="Dashboard">
+    <div class="jumbotron">
+        <span class="dashboard-room" ng-if="!selected_room">
             <span ng-include src="'static/templates/dashboard.html'"></span>
-        </div>
+        </span>
 
-        <div class="tab-pane detail" id="room-{{$index}}" ng-repeat="room in rooms">
-            <span ng-include src="'static/templates/room.html'"></span>
-        </div>
+        <span class="dashboard-room" ng-if="selected_room">
+            <span ng-include src="'static/templates/room.html'" ng-init="room = selected_room"></span>
+        </span>
     </div>
 </div>

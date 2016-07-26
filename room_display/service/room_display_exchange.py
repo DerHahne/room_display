@@ -23,6 +23,7 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         refresh_time_seconds,
         timezone_name,
     ):
+        self.refresh_time_seconds = refresh_time_seconds
         self.timezone = timezone(timezone_name)
         self.exchange = ExchangeCalendar(
             domain,
@@ -32,34 +33,13 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             self.timezone
         )
 
-        if room_dict:
-            potential_rooms = json.loads(room_dict)
-        elif room_search_term:
-            potential_rooms = {room['displayName']: room['email'] for room in self.exchange.get_contacts(room_search_term)}
-        else:
-            raise Exception('You must provide one of room_dict or room_search_term!')
-
-        # Check for valid rooms
-        self.rooms = dict([
-            (room_name, room_email)
-            for room_name, room_email in potential_rooms.iteritems()
-            if self._check_room(room_email)
-        ])
+        # Find the rooms
+        potential_rooms = self._get_potential_rooms(room_dict, room_search_term)
+        self.rooms = self._get_valid_rooms(potential_rooms)
 
         # Start the data grabbing thread
-        self._rooms = []
-        self.refresh_time_seconds = refresh_time_seconds
         Thread.__init__(self)
         self.start()
-
-    def run(self):
-        logger.debug('Data thread: Starting...')
-        while (True):
-            logger.debug('Data thread: Fetching...')
-            self._update_room_data()
-            logger.debug('Data thread: Waiting...')
-            time.sleep(self.refresh_time_seconds)
-        logger.debug('Data thread: Done!')
 
     def _magic_timezone_conversion(self, dt):
         # Yay, timezones!
@@ -71,36 +51,37 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
         end = now.replace(hour=23, minute=59, second=59)
         return start, end
 
-    def _check_room(self, room_email):
-        start, end = self._get_day_boundaries()
-
-        try:
-            # Fetch the room bookings
-            self.exchange.get_bookings(start, end, room_email)
-        except RuntimeError:
-            return False
-        return True
-
-    def _update_room_data(self):
-        start, end = self._get_day_boundaries()
-
-        rooms = []
-
-        for room_name, room_email in self.rooms.iteritems():
-            meeting_room_details = {
-                'id': room_email,
-                'name': room_name,
-                'bookings': [
-                    self._transform_booking_info(booking)
-                    for booking in self.exchange.get_bookings(start, end, room_email)
-                ]
+    def _get_potential_rooms(self, room_dict, room_search_term):
+        if room_dict:
+            return json.loads(room_dict)
+        if room_search_term:
+            return {
+                room['displayName']: room['email']
+                for room in self.exchange.get_contacts(room_search_term)
             }
-            rooms.append(meeting_room_details)
+        raise Exception('You must provide one of room_dict or room_search_term!')
 
-        self._rooms = rooms
+    def _get_valid_rooms(self, potential_rooms):
+        rooms = {}
+        for room_name, room_email in potential_rooms.iteritems():
+            try:
+                # Try to fetch the room bookings
+                rooms[room_email] = {
+                    'id': room_email,
+                    'name': room_name,
+                    'bookings': self._get_bookings(room_email)
+                }
+            except RuntimeError:
+                # Couldn't get the bookings; skip this room
+                pass
+        return rooms
 
-    def get_room_data(self):
-        return self._rooms
+    def _get_bookings(self, room_id):
+        start, end = self._get_day_boundaries()
+        return [
+            self._transform_booking_info(booking)
+            for booking in self.exchange.get_bookings(start, end, room_id)
+        ]
 
     def _transform_booking_info(self, booking):
         return {
@@ -108,6 +89,25 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             'start_minute': self.datetime_to_minute(booking['start']),
             'end_minute': self.datetime_to_minute(booking['end']),
         }
+
+    def run(self):
+        logger.debug('Data thread: Starting...')
+        while (True):
+            logger.debug('Data thread: Waiting...')
+            time.sleep(self.refresh_time_seconds)
+            logger.debug('Data thread: Fetching...')
+            self._update_rooms()
+        logger.debug('Data thread: Done!')
+
+    def _update_rooms(self):
+        for room_id in self.rooms.iterkeys():
+            self._update_room(room_id)
+
+    def _update_room(self, room_id):
+        self.rooms[room_id]['bookings'] = self._get_bookings(room_id)
+
+    def get_room_data(self):
+        return self.rooms.values()
 
     def _is_free(self, room_id, start, end):
         # TODO: Work this out!
@@ -133,5 +133,8 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             description
         )
 
+        # Wait a bit to let Exchange work out what's going on
+        time.sleep(5)
+
         # Get the latest Exchange data now
-        self._update_room_data()
+        self._update_room(room_id)

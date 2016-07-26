@@ -70,12 +70,12 @@ If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" t
 Backend:
 * InstaBooking:
   * Booking takes a while to showup; maybe add it to the booking list rather than refreshing?
-  * Only refresh bookings for the room which has been updated
   * Check if the room is free
-* Store the data we get from outlook when `_check_room` is run
-* Add makefile?
 
 Frontend:
+* UI improvements:
+  * Meeting progress bar / countdown clock
+  * Bigger colour bar
 * InstaBooking:
   * Show a confirmation dialog
   * Let the user know if there was an error booking

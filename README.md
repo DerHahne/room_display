@@ -76,6 +76,7 @@ Frontend:
 * UI improvements:
   * Meeting progress bar / countdown clock
   * Bigger colour bar
+  * On small screen, navbar obscures some meeting info
 * InstaBooking:
   * Show a confirmation dialog
   * Let the user know if there was an error booking

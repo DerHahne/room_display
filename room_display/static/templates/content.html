@@ -1,13 +1,13 @@
-<div class="tabbable" ng-controller="RoomDisplayController as roomDisplay">
+<div ng-controller="RoomDisplayController as roomDisplay">
     <nav class="navbar navbar-default navbar-fixed-top">
         <span ng-include src="'static/templates/navbar.html'"></span>
     </nav>
     <div class="jumbotron">
-        <span class="dashboard-room" ng-if="!selected_room">
+        <span ng-if="!selected_room">
             <span ng-include src="'static/templates/dashboard.html'"></span>
         </span>
 
-        <span class="dashboard-room" ng-if="selected_room">
+        <span ng-if="selected_room">
             <span ng-include src="'static/templates/room.html'" ng-init="room = selected_room"></span>
         </span>
     </div>

@@ -19,12 +19,6 @@ a:hover {
 .navbar {
     background: #1c1e22;
 }
-.navbar-default .navbar-nav>.active>a {
-    background: none;
-}
-.navbar-nav>li>a {
-    border: none;
-}
 .navbar-right>div {
     float: right;
     margin: 5px;
@@ -43,89 +37,46 @@ a:hover {
     margin-right: 5px;
 }
 
-.dropdown-menu {
-    width: 30em;
-}
-.dropdown-menu li a {
-    font-size: 20pt;
-}
-.dropdown-menu li {
-    padding-left: 3em;
-    position: relative;
-}
-.dropdown-menu li:before {
-    font-size: 2em!important;
-}
-
 
 /*SHARED*/
 .jumbotron {
     margin-top: 60px;
 }
-li.room-available {
+li.room-booking:before {
+  font-family: "Glyphicons Halflings";
+  font-size: 4em;
+  position: absolute;
+  height: 100%;
+  top: 1em;
+  left: 0em;
+  margin-top: -1em;
+  width: 3em;
+  vertical-align: middle;
+  text-align: center;
 }
 li.room-available:before {
   content: "\e013";
-  font-family: "Glyphicons Halflings";
-  font-size: 3em;
   color: #00ff00;
   background-color: #299a0b;
-  position: absolute;
-  height: 100%;
-  top: 1em;
-  left: 0em;
-  margin-top: -1em;
-  width: 1.5em;
-  vertical-align: middle;
-  text-align: center;
-}
-li.room-busy {
-
 }
 li.room-busy:before {
   content: "\e090";
-  font-family: "Glyphicons Halflings";
-  font-size: 3em;
   color: #ff0000;
   background-color: #cf0404;
-  position: absolute;
-  height: 100%;
-  top: 1em;
-  left: 0em;
-  margin-top: -1em;
-  width: 1.5em;
-  vertical-align: middle;
-  text-align: center;
 }
 
 
 /*DASHBOARD*/
-.dashboard-room-booking {
-    display: block;
-    background-color: #181818;
+.dashboard-room .room-name {
+    margin-top: -10px;
+}
+.dashboard-room .room-booking {
     margin-bottom: 10px;
-    padding: 10px;
 }
-li.dashboard-room-booking {
-    display: block;
-    background-color: #181818;
-    margin-bottom: 10px;
-    margin-left: 0px;
-    padding: 0.5em 0.5em 0.5em 5em;
-    position: relative;
-}
-.dashboard-booking-details {
-    display: block;
-}
-.dashboard-booking-details>span {
+.dashboard-room .booking-details>span {
     margin-right: 15px;
 }
-.dashboard-room-name {
-    display: block;
-    margin-top: -10px;
-    font-size: 20pt;
-}
-.dashboard-booking-availability {
+.dashboard-room .booking-availability {
     font-size: 20pt;
 }
 
@@ -135,28 +86,22 @@ li.dashboard-room-booking {
     display: block;
     font-size: 20pt;
 }
-.room-booking {
-    display: block;
-    background-color: #181818;
-    margin-bottom: 20px;
-    padding: 20px;
-}
 li.room-booking {
     display: block;
     background-color: #181818;
     margin-bottom: 20px;
-    padding: 0.5em 0.5em 0.5em 5em;
+    padding: 0.5em 0.5em 0.5em 13em;
     position: relative;
 }
 .booking-time {
     display: block;
 }
+.booking-details {
+    display: block;
+}
 .booking-heading {
     display: block;
     font-size: 30pt;
-}
-.booking-details {
-    display: block;
 }
 .booking-first {
     zoom: 2;

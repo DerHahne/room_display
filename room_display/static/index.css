@@ -19,7 +19,6 @@ a:hover {
 .navbar {
     background: #1c1e22;
 }
-
 .navbar-default .navbar-nav>.active>a {
     background: none;
 }
@@ -28,6 +27,7 @@ a:hover {
 }
 .navbar-right>div {
     float: right;
+    margin: 5px;
 }
 
 

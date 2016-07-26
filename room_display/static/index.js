@@ -10,6 +10,10 @@ roomDisplayModule.config(function($provide) {
         roomDataInstance.rooms = [];
         // Fuck Angular binding
         roomDataInstance.instabookTimes = [];
+        // Seriously, FUCK ANGULAR BINDING
+        roomDataInstance.loading = {
+            loading: false
+        };
 
 
         /*
@@ -85,6 +89,7 @@ roomDisplayModule.config(function($provide) {
 
         roomDataInstance.updateNow = function() {
             console.log('Fetching room data...');
+            roomDataInstance.loading.loading = true;
             $http
                 .get('/data')
                 .then(function(response) {
@@ -94,6 +99,9 @@ roomDisplayModule.config(function($provide) {
 
                     // Update the changing information
                     roomDataInstance._updateRoomBookingsNow();
+                })
+                .finally(function() {
+                    roomDataInstance.loading.loading = false;
                 });
             // TODO: Error handling
         };
@@ -312,10 +320,20 @@ roomDisplayModule.controller('RoomDisplayController', function($roomData, $scope
     $scope.rooms = $roomData.rooms;
     $scope.instabookTimes = $roomData.instabookTimes;
     $scope.addBooking = $roomData.addBooking;
+    $scope.loading = $roomData.loading;
 
     $scope.clickRoom = function(room) {
         $scope.selected_room = room;
-    }
+    };
+
+    $scope.refresh = function() {
+        $roomData.updateNow();
+    };
+
+    $scope.fullscreen = function() {
+        var req = document.body.requestFullScreen || document.body.webkitRequestFullScreen || document.body.mozRequestFullScreen;
+        req.call(document.body.parentNode);
+    };
 
     $roomData.enablePolling();
 });
@@ -330,18 +348,3 @@ roomDisplayModule.controller('TimeController', function($scope, $interval) {
     tick();
     $interval(tick, 1000);
 });
-
-
-angular.element(document).ready(function() {
-    // HACK: Need to wait for the navbar to be rendered before binding events to it
-    setTimeout(init, 1000);
-});
-
-function init() {
-    // Fullscreen button
-    $('#fullscreen').on('click', function() {
-        var req = document.body.requestFullScreen || document.body.webkitRequestFullScreen || document.body.mozRequestFullScreen;
-        req.call(document.body.parentNode);
-    });
-
-}

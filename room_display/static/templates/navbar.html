@@ -12,9 +12,22 @@
 
         <span class="navbar-right" ng-controller='TimeController'>
             <div>
-                <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" id="fullscreen">
+                <button type="button" class="btn btn-default btn-lg" aria-label="Full Screen" ng-click="fullscreen()">
                     <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
                 </button>
+            </div>
+
+            <div>
+                <span ng-if="loading.loading">
+                    <button type="button" class="btn btn-default btn-lg" disabled="disabled">
+                        <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span>
+                    </button>
+                </span>
+                <span ng-if="!loading.loading">
+                    <button type="button" class="btn btn-default btn-lg" aria-label="Refresh" ng-click="refresh()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </span>
             </div>
 
             <div>

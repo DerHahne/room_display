@@ -1,37 +1,7 @@
 <ul class="dashboard-room" ng-repeat="room in rooms">
     <a ng-click="clickRoom(room)">
         <li ng-if="room.first_booking" class="room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
-            <span>
-                <span class="room-name">
-                    {{room.name}}
-                </span>
-
-                <span class="booking-details">
-                    <span class="booking-availability">
-                        <span ng-if="room.first_booking.available">
-                            Available
-                        </span>
-                        <span ng-if="!room.first_booking.available">
-                            Booked
-                        </span>
-                    </span>
-
-                    <span class="booking-duration">
-                        <span ng-if="room.first_booking.starts_in_minutes <= 0">
-                            For {{room.first_booking.ends_in_minutes_fuzzy}}
-                        </span>
-                        <span ng-if="room.first_booking.starts_in_minutes > 0">
-                            In {{room.first_booking.starts_in_minutes_fuzzy}}
-                        </span>
-                        ({{room.first_booking.start_time}} - {{room.first_booking.end_time}})
-                    </span>
-
-                    <span ng-if="room.first_booking.username" class="booking-username">
-                        (By {{room.first_booking.username}})
-                    </span>
-
-                </span>
-            </span>
+            <span ng-include src="'static/templates/dashboard-booking.html'"></span>
         </li>
         <li ng-if="!room.first_booking" class="room-booking room-available">
             <span class="room-name">

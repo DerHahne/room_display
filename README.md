@@ -81,8 +81,6 @@ Frontend:
   * Show a confirmation dialog
   * Let the user know if there was an error booking
 * Extend booking
-* Click on room in dashboard
-  * Make it work when there are no bookings
 * Fix dashboard updating - Angular doesnt seem to pickup when `first_booking` is changed?
 * Add home page & move there after inactivity
 * Add currently free room suggestions

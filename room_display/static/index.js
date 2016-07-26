@@ -290,6 +290,7 @@ roomDisplayModule.config(function($provide) {
         */
         roomDataInstance.addBooking = function(room_id, length) {
             console.log('Adding booking...', room_id, length);
+            roomDataInstance.loading.loading = true;
             $http({
                     url: '/instabook',
                     method: 'POST',
@@ -304,6 +305,9 @@ roomDisplayModule.config(function($provide) {
                 .then(function(response) {
                     // Update list of bookings
                     roomDataInstance.updateNow();
+                })
+                .finally(function() {
+                    roomDataInstance.loading.loading = false;
                 });
             // TODO: Error handling
         };

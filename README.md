@@ -68,14 +68,16 @@ If the meeting rooms are called "Cloud Meet", "Corporate Meet" and "Blue Meet" t
 ## Todo
 
 Backend:
+* InstaBooking:
+  * Booking takes a while to showup; maybe add it to the booking list rather than refreshing?
+  * Only refresh bookings for the room which has been updated
+  * Check if the room is free
+* Store the data we get from outlook when `_check_room` is run
 * Add makefile?
 
 Frontend:
 * InstaBooking:
-  * Make it work on Exchange!
-  * Check if the room is free
   * Show a confirmation dialog
-  * Spinner until backend returns success
   * Let the user know if there was an error booking
 * Click on room in dashboard
   * Make it work when there are no bookings

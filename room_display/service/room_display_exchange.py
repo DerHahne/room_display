@@ -61,9 +61,12 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             time.sleep(self.refresh_time_seconds)
         logger.debug('Data thread: Done!')
 
-    def _get_day_boundaries(self):
+    def _magic_timezone_conversion(self, dt):
         # Yay, timezones!
-        now = timezone('UTC').localize(datetime.now()).astimezone(self.timezone)
+        return timezone('UTC').localize(dt).astimezone(self.timezone)
+
+    def _get_day_boundaries(self):
+        now = self._magic_timezone_conversion(datetime.now())
         start = now.replace(hour=0, minute=0, second=0)
         end = now.replace(hour=23, minute=59, second=59)
         return start, end
@@ -118,6 +121,9 @@ class RoomDisplayExchange(RoomDisplayBase, Thread):
             subject,
             description
         ):
+        start = self._magic_timezone_conversion(start)
+        end = self._magic_timezone_conversion(end)
+
         # Add the booking
         self.exchange.add_booking(
             room_id,

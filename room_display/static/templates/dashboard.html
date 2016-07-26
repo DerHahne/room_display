@@ -1,6 +1,6 @@
 <ul class="dashboard-room" ng-repeat="room in rooms">
-    <li ng-if="room.first_booking" class="dashboard-room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
-        <a ng-click="clickRoom(room)">
+    <a ng-click="clickRoom(room)">
+        <li ng-if="room.first_booking" class="dashboard-room-booking {{room.first_booking.available ? 'room-available' : 'room-busy'}}">
             <span>
                 <span class="dashboard-room-name">
                     {{room.name}}
@@ -32,8 +32,8 @@
 
                 </span>
             </span>
-        </a>
-    </li>
+        </li>
+    </a>
     <span ng-if="!room.first_booking">
         <h1 class="dashboard-room-name">
             {{room.name}}

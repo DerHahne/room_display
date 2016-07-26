@@ -33,12 +33,14 @@
                 </span>
             </span>
         </li>
-    </a>
-    <span ng-if="!room.first_booking">
-        <h1 class="room-name">
-            {{room.name}}
-        </h1>
+        <li ng-if="!room.first_booking" class="room-booking room-available">
+            <span class="room-name">
+                {{room.name}}
+            </span>
 
-        No more bookings!
-    </span>
+            <span class="booking-availability">
+                No more bookings!
+            </span>
+        </li>
+    </a>
 </ul>

@@ -10,4 +10,11 @@
             <span ng-include src="'static/templates/booking.html'"></span>
         </span>
     </li>
+    <li ng-if="room.bookings.length == 0" class="room-booking room-available">
+        <span class="booking-first">
+            <span class="booking-heading">
+                No more bookings!
+            </span>
+        </span>
+    </li>
 </ul>

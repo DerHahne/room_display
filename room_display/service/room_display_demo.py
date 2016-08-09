@@ -54,6 +54,7 @@ class RoomDisplayDemo(RoomDisplayBase):
                     booking('Alice', 11, 15, 30),
                     booking('Bob', 14, 0, 120),
                     booking('Carol', 16, 0, 60),
+                    booking('Dave', 20, 0, 60),
                 ]
             },
             'indigo_room': {
@@ -63,6 +64,7 @@ class RoomDisplayDemo(RoomDisplayBase):
                     booking('Alice', 11, 45, 30),
                     booking('Bob', 15, 0, 120),
                     booking('Carol', 17, 0, 60),
+                    booking('Dave', 21, 0, 60),
                 ]
             },
             'violet_room': {
@@ -72,6 +74,7 @@ class RoomDisplayDemo(RoomDisplayBase):
                     booking('Alice', 12, 15, 30),
                     booking('Bob', 16, 0, 120),
                     booking('Carol', 18, 0, 60),
+                    booking('Dave', 22, 0, 60),
                 ]
             },
         }
